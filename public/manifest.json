@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "name": "better-wykope",
+  "author": "Maciej Sawicki",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.wykop.pl/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "bundle.css"
+      ],
+      "js": [
+        "app.js"
+      ]
+    }
+  ]
+}
