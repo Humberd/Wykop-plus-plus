@@ -18,6 +18,18 @@ steps:
     inputs:
       command: run build-prod
 
-  - task: PublishBuildArtifacts@1
+  - task: ArchiveFiles@2
     inputs:
-      PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build'
+      includeRootFolder: false
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: |
+        build.zip
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+
+  # https://docs.microsoft.com/pl-pl/azure/devops/pipelines/languages/javascript?view=vsts&tabs=yaml
+  - task: PublishBuildArtifacts@1
