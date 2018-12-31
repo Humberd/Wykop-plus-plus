@@ -9,5 +9,5 @@ variables:
 
 steps:
   - script: |
-      npm install
+      npm ci
       npm run build-prod
