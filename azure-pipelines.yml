@@ -14,4 +14,4 @@ steps:
       docker build --build-arg APP_ID=$(APP_ID) \
                    --build-arg CLIEND_ID=$(CLIENT_ID) \
                    --build-arg CLIENT_SECRET=$(CLIENT_SECRET) \
-                   --build-arg AUTH_CODE=$(AUTH_CODE)
+                   --build-arg AUTH_CODE=$(AUTH_CODE) .
