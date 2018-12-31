@@ -1,5 +1,3 @@
-$body-color: blue;
-
 #itemsStream > .iC {
   position: relative;
 
@@ -10,6 +8,7 @@ $body-color: blue;
 
   &.collapsed > ul.sub {
     display: none;
+    height: 0;
   }
 }
 

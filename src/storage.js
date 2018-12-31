@@ -19,16 +19,6 @@ export class CommentsStorage {
       })
     })
 
-    // try {
-    //   JSON.parse(this.storage.get(COMMENTS_STORAGE_KEY));
-    // } catch (e) {
-    //   console.log(e);
-    //   return null;
-    // }
-  }
-
-  clear() {
-    this.storage.remove(COMMENTS_STORAGE_KEY);
   }
 
 }

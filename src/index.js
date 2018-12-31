@@ -1,60 +1,60 @@
 import './styles/index.scss';
 import {CommentsStorage} from './storage';
+import {StatePersistor} from './state-persistor';
 
 const commentsStorage = new CommentsStorage();
+const statePersistor = new StatePersistor(commentsStorage);
 
-(async function () {
-  const state = await commentsStorage.readAll() || {
-    comments: {},
-  };
+(async function() {
+  console.log(await commentsStorage.readAll());
+  statePersistor.initState(await commentsStorage.readAll());
+
+  const articleId = getArticleId();
 
   const commentsParent = document.querySelectorAll('#itemsStream > .iC');
-
-  console.log(`There are ${commentsParent.length} comment parents`);
 
   for (const commentBlock of commentsParent) {
     const aElem = document.createElement('a');
     aElem.setAttribute('href', 'javascript:void(0)');
     aElem.className = 'comment-expand';
 
-    const commentId = commentBlock.querySelector(".dC").dataset.id;
-    state.comments[commentId] = state.comments[commentId] || {};
+    const commentId = commentBlock.querySelector('.dC').dataset.id;
 
-    if (state.comments[commentId].isCollapsed) {
-      collapse(aElem, commentBlock, commentId);
+    if (statePersistor.isCommentHidden(articleId, commentId)) {
+      statePersistor.hideComments(aElem, commentBlock, articleId, commentId);
     } else {
-      expand(aElem, commentBlock, commentId);
+      statePersistor.showComments(aElem, commentBlock, articleId, commentId);
     }
 
     aElem.onclick = () => {
-      if (isCollapsed(commentBlock)) {
-        expand(aElem, commentBlock, commentId);
+      if (statePersistor.isCommentHidden(articleId, commentId)) {
+        statePersistor.showComments(aElem, commentBlock, articleId, commentId);
       } else {
-        collapse(aElem, commentBlock, commentId);
+        statePersistor.hideComments(aElem, commentBlock, articleId, commentId);
       }
     };
 
     commentBlock.prepend(aElem);
   }
 
-  function collapse(aElem, parent, commentId) {
-    aElem.textContent = '[+]';
-    parent.classList.add('collapsed');
-    parent.dataset.collapsed = 'true';
-    state.comments[commentId].isCollapsed = true;
-    commentsStorage.saveAll(state);
+  lazyLoadImages();
+
+  function lazyLoadImages() {
+    // language=JavaScript
+    var actualCode = `wykop.bindLazy()`;
+
+    var script = document.createElement('script');
+    script.textContent = actualCode;
+    (document.head || document.documentElement).appendChild(script);
+    script.remove();
   }
 
-  function expand(aElem, parent, commentId) {
-    aElem.textContent = '[-]';
-    parent.classList.remove('collapsed');
-    parent.dataset.collapsed = 'false';
-    state.comments[commentId].isCollapsed = false;
-    commentsStorage.saveAll(state);
-  }
+  function getArticleId() {
+    if (!location.pathname.startsWith('/link')) {
+      return 'mikroblog';
+    }
 
-  function isCollapsed(parent) {
-    return parent.dataset.collapsed === 'true';
+    return location.pathname.split('/')[2];
   }
 
 })();
