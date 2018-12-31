@@ -78,12 +78,19 @@ const statePersistor = new StatePersistor(commentsStorage);
     if (!moreElem) {
       childCount = elem.querySelectorAll('.sub > li').length;
     } else {
-      childCount = /\((\d+)\)/g.exec(moreElem.textContent)[1];
+      try {
+        childCount = /\((\d+)\)/g.exec(moreElem.textContent)[1] + 2;
+      } catch (e) {
+        childCount = elem.querySelectorAll('.sub > li').length;
+      }
     }
 
     span.textContent = `(${childCount} dzieci)`;
 
-    elem.querySelector('.author .affect').appendChild(span);
+    //add children count only to mikroblog posts
+    if (!elem.classList.contains('link')) {
+      elem.querySelector('.author .affect').appendChild(span);
+    }
 
     return span;
   }
