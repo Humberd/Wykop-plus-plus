@@ -28,6 +28,7 @@ steps:
       SourceFolder: '$(System.DefaultWorkingDirectory)'
       Contents: |
         build.zip
+        scripts/build.sh
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 
