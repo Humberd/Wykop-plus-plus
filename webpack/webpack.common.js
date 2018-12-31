@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: Path.resolve(__dirname, '../src/index.js')
+    app: Path.resolve(__dirname, '../src/index.js'),
+    background: Path.resolve(__dirname, "../src/background/hot-reload.js")
   },
   output: {
     path: Path.join(__dirname, '../build'),

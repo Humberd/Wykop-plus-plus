@@ -2,42 +2,41 @@ const Path = require('path');
 const Webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
 module.exports = merge(common, {
-  mode: 'development',
-  devtool: 'cheap-eval-source-map',
+  mode: 'production',
+  devtool: 'source-map',
+  stats: 'errors-only',
+  bail: true,
   output: {
     filename: './[name].js',
-    chunkFilename: './[name].js'
-  },
-  devServer: {
-    inline: true
   },
   plugins: [
     new Webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+    new Webpack.optimize.ModuleConcatenationPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'bundle.css',
+    }),
+    new ChromeExtensionReloader(),
   ],
   module: {
     rules: [
       {
         test: /\.(js)$/,
-        include: Path.resolve(__dirname, '../src'),
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        options: {
-          emitWarning: true,
-        }
+        exclude: /node_modules/,
+        use: 'babel-loader',
       },
       {
-        test: /\.(js)$/,
-        include: Path.resolve(__dirname, '../src'),
-        loader: 'babel-loader'
+        test: /\.s?css/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       },
-      {
-        test: /\.s?css$/i,
-        use: ['style-loader', 'css-loader?sourceMap=true', 'sass-loader']
-      }
-    ]
-  }
+    ],
+  },
 });

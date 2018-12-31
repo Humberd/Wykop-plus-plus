@@ -1,5 +1,36 @@
 $body-color: blue;
 
-body {
-  color: $body-color;
+#itemsStream > .iC {
+  position: relative;
+
+  /* Parent comment */
+  & > .dC {
+    padding-left: 15px;
+  }
+
+  &.collapsed > ul.sub {
+    display: none;
+  }
+}
+
+.comment-expand {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 15px;
+  text-align: center;
+  padding: 3px 0;
+  top: 0;
+  left: 3px;
+  transition: background-color 200ms;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 10px;
+
+  text-decoration: none;
+  color: #0082f0;
+
+  &:hover {
+    text-decoration: none;
+    background: #d3d3d3;
+  }
 }
