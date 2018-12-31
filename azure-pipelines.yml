@@ -8,7 +8,7 @@ steps:
     inputs:
       versionSpec: '10.x'
 
-  - script: which node
+  - script: node --version
 
   - task: Npm@1
     displayName: 'npm ci'
