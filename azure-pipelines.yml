@@ -4,6 +4,20 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-  - script: |
-      npm ci
-      npm run build-prod
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+
+  - task: Npm@1
+    displayName: 'npm ci'
+    inputs:
+      command: ci
+
+  - task: Npm@1
+    displayName: 'npm run build-prod'
+    inputs:
+      command: run build-prod
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
