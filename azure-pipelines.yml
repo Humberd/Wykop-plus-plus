@@ -8,7 +8,7 @@ variables:
 
 steps:
   - script: |
-      docker build --build-arg APP_ID=$(APP_ID) \
-                   --build-arg CLIEND_ID=$(CLIENT_ID) \
-                   --build-arg CLIENT_SECRET=$(CLIENT_SECRET) \
-                   --build-arg AUTH_CODE=$(AUTH_CODE) .
+      docker build --build-arg APP_ID=$(wykop-chrome-store-deployment.APP_ID) \
+                   --build-arg CLIEND_ID=$(wykop-chrome-store-deployment.CLIENT_ID) \
+                   --build-arg CLIENT_SECRET=$(wykop-chrome-store-deployment.CLIENT_SECRET) \
+                   --build-arg AUTH_CODE=$(wykop-chrome-store-deployment.AUTH_CODE) .
