@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "name": "better-wykope",
   "author": "Maciej Sawicki",
-  "permissions": [],
+  "permissions": [
+    "storage"
+  ],
   "content_scripts": [
     {
       "matches": [
