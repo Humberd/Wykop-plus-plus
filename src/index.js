@@ -9,7 +9,6 @@ const statePersistor = new StatePersistor(commentsStorage);
   statePersistor.initState(await commentsStorage.readAll());
 
   const articleId = getArticleId();
-  console.log("dsdss");
 
   const commentsParent = document.querySelectorAll('#itemsStream > .iC');
 
