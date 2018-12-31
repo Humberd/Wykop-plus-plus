@@ -1,0 +1,13 @@
+# Build Docker image for this app using Azure Pipelines
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker?view=vsts
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  imageName: 'testsample:$(Build.BuildId)'
+  # define two more variables dockerId and dockerPassword in the build pipeline in UI
+
+steps:
+  - script: |
+      npm install
+      npm run build-prod
