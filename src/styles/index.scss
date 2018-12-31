@@ -1,14 +1,59 @@
-#itemsStream > .iC {
+#itemsStream > .iC:not(.link) {
   position: relative;
 
   /* Parent comment */
-  & > .dC {
+  & > .dC:not(.article) {
     padding-left: 15px;
   }
 
-  &.collapsed > ul.sub {
-    display: none;
-    height: 0;
+  & > .dC.article {
+    margin-left: 3px;
+  }
+
+  &.collapsed {
+
+    & > ul.sub {
+      display: none;
+      height: 0;
+    }
+
+    a.profile {
+      display: none;
+    }
+
+    .text {
+      display: none;
+    }
+
+    .actions {
+      display: none;
+    }
+
+    .author.hlight {
+      border-bottom: unset !important;
+    }
+
+    .wblock .profile + div {
+      margin-left: 15px !important;
+    }
+
+    @media screen and (max-width: 721px) {
+      .author {
+        padding-top: 0;
+        height: unset;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  @media screen and (max-width: 721px) {
+    .wblock a.profile {
+      margin-left: 5px !important;
+    }
+
+    .wblock .profile + div {
+      margin-left: 55px !important;
+    }
   }
 }
 
