@@ -6,10 +6,10 @@ const commentsStorage = new CommentsStorage();
 const statePersistor = new StatePersistor(commentsStorage);
 
 (async function() {
-  console.log(await commentsStorage.readAll());
   statePersistor.initState(await commentsStorage.readAll());
 
   const articleId = getArticleId();
+  console.log("dsdss");
 
   const commentsParent = document.querySelectorAll('#itemsStream > .iC');
 

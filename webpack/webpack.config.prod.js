@@ -5,8 +5,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
+  entry: {
+    'hot-reload': Path.resolve(__dirname,
+        '../src/background/hot-reload.prod.js'),
+  },
   mode: 'production',
-  devtool: 'source-map',
+  devtool: false,
   stats: 'errors-only',
   bail: true,
   output: {
