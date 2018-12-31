@@ -14,9 +14,8 @@ const statePersistor = new StatePersistor(commentsStorage);
   const commentsParent = document.querySelectorAll('#itemsStream > .iC');
 
   for (const commentBlock of commentsParent) {
-    const aElem = document.createElement('a');
-    aElem.setAttribute('href', 'javascript:void(0)');
-    aElem.className = 'comment-expand';
+    createChildCounter(commentBlock);
+    const aElem = createHideButton(commentBlock);
 
     const commentId = commentBlock.querySelector('.dC').dataset.id;
 
@@ -33,12 +32,14 @@ const statePersistor = new StatePersistor(commentsStorage);
         statePersistor.hideComments(aElem, commentBlock, articleId, commentId);
       }
     };
-
-    commentBlock.prepend(aElem);
   }
 
   lazyLoadImages();
 
+  /* Images would not load when we hide an image.
+   * This script does not have access to page context, so as a workaround
+   * we have to create a script, append it to the page and then
+   * execute it in the page context. */
   function lazyLoadImages() {
     // language=JavaScript
     var actualCode = `wykop.bindLazy()`;
@@ -55,6 +56,36 @@ const statePersistor = new StatePersistor(commentsStorage);
     }
 
     return location.pathname.split('/')[2];
+  }
+
+  function createHideButton(elem) {
+    const a = document.createElement('a');
+    a.setAttribute('href', 'javascript:void(0)');
+    a.classList.add('comment-expand');
+
+    elem.prepend(a);
+
+    return a;
+  }
+
+  function createChildCounter(elem) {
+    const span = document.createElement('span');
+    span.classList.add('child-counter');
+
+    const moreElem = elem.querySelector('.sub .more a');
+
+    let childCount;
+    if (!moreElem) {
+      childCount = elem.querySelectorAll('.sub > li').length;
+    } else {
+      childCount = /\((\d+)\)/g.exec(moreElem.textContent)[1];
+    }
+
+    span.textContent = `(${childCount} dzieci)`;
+
+    elem.querySelector('.author .affect').appendChild(span);
+
+    return span;
   }
 
 })();
