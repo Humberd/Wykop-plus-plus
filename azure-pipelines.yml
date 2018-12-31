@@ -25,10 +25,10 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)'
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
       Contents: |
         build.zip
-        ./scripts/build.sh
+        ./scripts/deploy.sh
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 
