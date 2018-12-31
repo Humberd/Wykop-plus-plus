@@ -4,10 +4,11 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-  - task: Npm@1
-    displayName: 'npm ci'
+  - task: NodeTool@0
     inputs:
-      command: ci
+      versionSpec: '10.x'
+
+  - script: npm ci
 
   - task: Npm@1
     displayName: 'npm run build-prod'
