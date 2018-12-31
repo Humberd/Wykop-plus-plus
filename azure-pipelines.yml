@@ -3,6 +3,12 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
+variables:
+  APP_ID: $(APP_DI)
+  CLIENT_ID: $(CLIENT_ID)
+  CLIENT_SECRET: $(CLIENT_SECRET)
+  AUTH_CODE: $(AUTH_CODE)
+
 steps:
   - script: |
       docker build --build-arg APP_ID=$(APP_ID) \
