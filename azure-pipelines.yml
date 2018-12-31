@@ -8,12 +8,18 @@ steps:
     inputs:
       versionSpec: '10.x'
 
-  - script: npm ci
+
+  - task: Npm@1
+    displayName: 'npm ci'
+    inputs:
+      command: custom
+      customCommand: ci
 
   - task: Npm@1
     displayName: 'npm run build-prod'
     inputs:
-      command: run build-prod
+      command: custom
+      customCommand: run build-prod
 
   - task: ArchiveFiles@2
     inputs:
