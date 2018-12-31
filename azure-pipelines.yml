@@ -9,6 +9,6 @@ variables:
 
 steps:
   - script: |
-      npm --version
       npm ci
       npm run build-prod
+      cd build; zip -r ../build.zip *
