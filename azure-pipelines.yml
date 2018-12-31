@@ -3,12 +3,7 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
-variables:
-  -group: wykop-chrome-store-deployment
-
 steps:
   - script: |
-      docker build --build-arg APP_ID=$(wykop-chrome-store-deployment.APP_ID) \
-                   --build-arg CLIEND_ID=$(wykop-chrome-store-deployment.CLIENT_ID) \
-                   --build-arg CLIENT_SECRET=$(wykop-chrome-store-deployment.CLIENT_SECRET) \
-                   --build-arg AUTH_CODE=$(wykop-chrome-store-deployment.AUTH_CODE) .
+      npm ci
+      npm run build-prod
