@@ -21,4 +21,3 @@ if test $STATUSCODE -ne 200; then
     echo "PUBLISH FAILED WITH STATUS CODE $STATUSCODE"
     exit 1
 fi
-
