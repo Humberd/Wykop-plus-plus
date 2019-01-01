@@ -1,6 +1,6 @@
 {
   "name": "webpack-starter",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A light foundation for your next frontend project based on webpack.",
   "scripts": {
     "build-dev": "webpack --config webpack/webpack.config.dev.js  --colors",
