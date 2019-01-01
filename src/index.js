@@ -78,7 +78,7 @@ const statePersistor = new StatePersistor(commentsStorage);
       childCount = elem.querySelectorAll('.sub > li').length;
     } else {
       try {
-        childCount = /\((\d+)\)/g.exec(moreElem.textContent)[1] + 2;
+        childCount = Number(/\((\d+)\)/g.exec(moreElem.textContent)[1]) + 2;
       } catch (e) {
         childCount = elem.querySelectorAll('.sub > li').length;
       }
