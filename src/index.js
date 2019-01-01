@@ -29,6 +29,7 @@ const statePersistor = new StatePersistor(commentsStorage);
         statePersistor.showComments(aElem, commentBlock, articleId, commentId);
       } else {
         statePersistor.hideComments(aElem, commentBlock, articleId, commentId);
+        lazyLoadImages()
       }
     };
   }
