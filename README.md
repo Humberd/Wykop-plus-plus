@@ -1,1 +1,2 @@
 [![Build Status](https://humberd.visualstudio.com/Wykop-plus-plus/_apis/build/status/Wykop-plus-plus-CI?branchName=master)](https://humberd.visualstudio.com/Wykop-plus-plus/_build/latest?definitionId=1?branchName=master)
+[![Deploy Status](https://humberd.vsrm.visualstudio.com/_apis/public/Release/badge/c81245c5-8aba-4588-a566-a3d5dc3703c2/2/2)](https://humberd.vsrm.visualstudio.com/_apis/public/Release/badge/c81245c5-8aba-4588-a566-a3d5dc3703c2/2/2)
