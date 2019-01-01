@@ -12,7 +12,9 @@ Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu [Wykop.pl](Wyk
 ### Funkcjonalności:
  * Umożliwia chowanie komentarzy - stan jest zapamiętywany.
  * Wyświetla liczbę komentarzy per rodzic.
- * Infinite scroll _(w trakcie)_.
+ * Infinite scroll _(TODO)_.
+ * Oznaczenie przeczytanych komentarzy _(TODO)_.
+ * TTL zapisanego stanu chowanych komentarzy _(TODO)_.
 
 ## Wymagania:
 
