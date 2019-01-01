@@ -14,7 +14,7 @@ Rozszerzenie Chrome zapewniające dodatkowe funkcjonalności dla portalu [Wykop.
 
 ### Screeny:
 
-![](.README_images/image1.png)
+![](images/.README_images/image1.png)
 
 
 ## Issues and contributions:

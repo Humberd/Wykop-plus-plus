@@ -26,5 +26,11 @@
       "background.js",
       "hot-reload.js"
     ]
+  },
+  "icons": {
+    "16": "icons/favicon-16.png",
+    "48": "icons/favicon-48.png",
+    "128": "icons/favicon-128.png",
+    "256": "icons/favicon-256.png"
   }
 }
