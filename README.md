@@ -10,13 +10,17 @@ Rozszerzenie Chrome zapewniające dodatkowe funkcjonalności dla portalu [Wykop.
  * Wyświetla liczbę komentarzy per rodzic.
  * Infinite scroll _(w trakcie)_.
 
-### Instalacja:
+## Wymagania:
+
+ * node 10.8.0 (inne wersje nie były testowane)
+
+## Instalacja:
 
 ```sh
 npm ci
 ```
 
-### Budowanie:
+## Budowanie:
 
 ```sh
 npm run build-prod
