@@ -5,9 +5,9 @@
 
 Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu [Wykop.pl](Wykop.pl).
 
-[Firefox Add-on](https://addons.mozilla.org/pl/firefox/addon/wykop-plus-plus/)
-
 [Chrome Store](https://chrome.google.com/webstore/detail/wykop%20%20/fdoonokgdbeahghjlmlfbbdopggbacio)
+
+[Firefox Add-on](https://addons.mozilla.org/pl/firefox/addon/wykop-plus-plus/)
 
 ### Funkcjonalności:
  * Umożliwia chowanie komentarzy - stan jest zapamiętywany.
