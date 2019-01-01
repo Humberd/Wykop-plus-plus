@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.0.11",
+  "version": "1.0.0",
   "description": "Dodatkowe funkcjonalnosci dla Wykop.pl",
   "name": "Wykop++",
   "author": "Maciej Sawicki",
