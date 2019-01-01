@@ -7,7 +7,7 @@ Rozszerzenie Chrome zapewniające dodatkowe funkcjonalności dla portalu [Wykop.
 
 ### Funkcjonalności:
  * Umożliwia chowanie komentarzy - stan jest zapamiętywany.
- * Wyświetla liczbę komentarzy.
+ * Wyświetla liczbę komentarzy per rodzic.
  * Infinite scroll _(w trakcie)_.
 
 
