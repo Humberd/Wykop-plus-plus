@@ -6,7 +6,7 @@
 Rozszerzenie Chrome zapewniające dodatkowe funkcjonalności dla portalu [Wykop.pl](Wykop.pl).
 
 ### Funkcjonalności:
- * Umożliwia chowanie komentarzy.
+ * Umożliwia chowanie komentarzy - stan jest zapamiętywany.
  * Wyświetla liczbę komentarzy.
  * Infinite scroll _(w trakcie)_.
 

@@ -10,7 +10,7 @@ const statePersistor = new StatePersistor(commentsStorage);
 
   const articleId = getArticleId();
 
-  const commentsParent = document.querySelectorAll('#itemsStream > .iC');
+  const commentsParent = document.querySelectorAll('#itemsStream > .iC:not(.link)');
 
   for (const commentBlock of commentsParent) {
     createChildCounter(commentBlock);
