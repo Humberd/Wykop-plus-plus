@@ -10,7 +10,7 @@ fi
 
 curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST -v "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"
 
-STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" -H "Authorization: Bearer ${ACCESS_TdOKEN}" -H "x-goog-api-version: 2" -X PUT -T ${BUILD_BUILDID}.zip -v "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${APP_ID}")
+STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T ${BUILD_BUILDID}.zip -v "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${APP_ID}")
 
 if test $STATUSCODE -ne 200; then
     echo "UPLOAD FAILED WITH STATUS CODE $STATUSCODE"
