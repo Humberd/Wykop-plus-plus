@@ -5,15 +5,17 @@
 
 Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu [Wykop.pl](Wykop.pl).
 
-<a href="https://chrome.google.com/webstore/detail/wykop%20%20/fdoonokgdbeahghjlmlfbbdopggbacio" style="display: flex; flex-direction: column; align-items: center;">
+<a href="https://chrome.google.com/webstore/detail/wykop%20%20/fdoonokgdbeahghjlmlfbbdopggbacio" style="display: flex; flex-direction: column; justify-content: center;">
   <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Google_Chrome_icon_%282011%29.svg" alt="Chrome Store" width="64">
   <div style="margin-top: 10px;">Chrome</div>
 </a>
 
-<a href="https://addons.mozilla.org/pl/firefox/addon/wykop-plus-plus/" style="display: flex; flex-direction: column; align-items: center;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Firefox_Logo%2C_2017.svg/2000px-Firefox_Logo%2C_2017.svg.png" alt="Firefox Addo-ons" width="64">
-  <div style="margin-top: 10px;">Firefox</div>
-</a>
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <a href="https://addons.mozilla.org/pl/firefox/addon/wykop-plus-plus/">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Firefox_Logo%2C_2017.svg/2000px-Firefox_Logo%2C_2017.svg.png" alt="Firefox Addo-ons" width="64">
+    </a>
+    <div style="margin-top: 10px;">Firefox</div>
+</div>
 
 ### Funkcjonalności:
  * Umożliwia chowanie komentarzy - stan jest zapamiętywany.
