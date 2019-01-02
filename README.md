@@ -5,15 +5,12 @@
 
 Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu [Wykop.pl](Wykop.pl).
 
-<a href="https://chrome.google.com/webstore/detail/wykop%20%20/fdoonokgdbeahghjlmlfbbdopggbacio">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Google_Chrome_icon_%282011%29.svg" alt="Chrome Store" width="64">
-  <span align="center">Chrome</span>
-</a>
 
-<a href="https://addons.mozilla.org/pl/firefox/addon/wykop-plus-plus/">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Firefox_Logo%2C_2017.svg/2000px-Firefox_Logo%2C_2017.svg.png" alt="Firefox Addo-ons" width="64">
-  <span align="center">Firefox</span>
-</a>
+#### Dostępne na:
+
+[<img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Google_Chrome_icon_%282011%29.svg" alt="Chrome Store" width="64">](https://chrome.google.com/webstore/detail/wykop%20%20/fdoonokgdbeahghjlmlfbbdopggbacio)
+[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Firefox_Logo%2C_2017.svg/2000px-Firefox_Logo%2C_2017.svg.png" alt="Firefox Addo-ons" width="64">](https://addons.mozilla.org/pl/firefox/addon/wykop-plus-plus/)
+
 
 ### Funkcjonalności:
  * Umożliwia chowanie komentarzy - stan jest zapamiętywany.
