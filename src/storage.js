@@ -1,23 +1,22 @@
-const COMMENTS_STORAGE_KEY = 'x-comments-state';
+export class Storage {
 
-export class CommentsStorage {
-
-  constructor() {
+  constructor(key) {
+    this.key = key;
     this.storage = chrome.storage.local;
   }
 
   saveAll(state) {
     this.storage.set({
-      [COMMENTS_STORAGE_KEY]: state
+      [this.key]: state,
     });
   }
 
   async readAll() {
-    return new Promise((resolve, reject) => {
-      this.storage.get(COMMENTS_STORAGE_KEY, value => {
-        resolve(value[COMMENTS_STORAGE_KEY])
-      })
-    })
+    return new Promise(resolve => {
+      this.storage.get(this.key, value => {
+        resolve(value[this.key]);
+      });
+    });
 
   }
 
