@@ -8,6 +8,5 @@ export class FooterRemoverModule {
   removeFooter() {
     getFooter().remove();
     getSite().classList.add('remove-footer');
-
   }
 }
