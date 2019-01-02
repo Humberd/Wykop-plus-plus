@@ -27,7 +27,6 @@ export class ChildrenCounterModule {
 
     span.textContent = `(${childCount} dzieci)`;
 
-    //add children count only to mikroblog posts
     elem.querySelector('.author .affect').appendChild(span);
 
     return span;

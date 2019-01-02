@@ -21,20 +21,20 @@ export class CommentsHiderModule {
 
       const commentId = commentBlock.querySelector('.dC').dataset.id;
 
-      if (this.statePersistor.isCommentHidden(articleId, commentId)) {
-        this.statePersistor.hideComments(aElem, commentBlock, articleId,
+      if (this.isCommentHidden(articleId, commentId)) {
+        this.hideComments(aElem, commentBlock, articleId,
             commentId);
       } else {
-        this.statePersistor.showComments(aElem, commentBlock, articleId,
+        this.showComments(aElem, commentBlock, articleId,
             commentId);
       }
 
       aElem.onclick = () => {
-        if (this.statePersistor.isCommentHidden(articleId, commentId)) {
-          this.statePersistor.showComments(aElem, commentBlock, articleId,
+        if (this.isCommentHidden(articleId, commentId)) {
+          this.showComments(aElem, commentBlock, articleId,
               commentId);
         } else {
-          this.statePersistor.hideComments(aElem, commentBlock, articleId,
+          this.hideComments(aElem, commentBlock, articleId,
               commentId);
           lazyLoadImages();
         }
@@ -63,7 +63,7 @@ export class CommentsHiderModule {
   hideComments(aElem, parent, articleId, commentId) {
     aElem.textContent = '[+]';
     parent.classList.add('collapsed');
-    this.statePersistor.state.commentHidePersistor[articleId] = this.state.statePersistor.commentHidePersistor[articleId] ||
+    this.statePersistor.state.commentHidePersistor[articleId] = this.statePersistor.state.commentHidePersistor[articleId] ||
         {collapsedThings: {}};
     this.statePersistor.state.commentHidePersistor[articleId].lastUpdate = new Date().getTime();
     this.statePersistor.state.commentHidePersistor[articleId].collapsedThings[commentId] = true;
