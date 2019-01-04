@@ -1,12 +1,10 @@
-import {getAllItems, getAllItemsParent, getPager} from '../../queries';
-import {isElementInViewport, lazyLoadImages} from '../../utils';
+import {getAllItems, getPager} from '../../queries';
+import {isElementInViewport} from '../../utils';
+import {PageController} from './page-controller';
 
 export class InfiniteScrollModule {
   init() {
-    this.pager = {
-      isLoading: false,
-      currentPage: 1,
-    };
+    this.pageController = new PageController();
 
     this.removePagination();
     this.startListener();
@@ -23,33 +21,19 @@ export class InfiniteScrollModule {
   }
 
   startListener() {
-    const allItems = getAllItems();
-    // TODO: get last element that is no an add
-    const lastItem = allItems[allItems.length - 2];
+    let lastItem = this.getLastItem();
 
     document.onscroll = async () => {
-      if (!this.pager.isLoading && isElementInViewport(lastItem)) {
-        await this.loadNextPage();
+      if (!this.pageController.page.isLoading && isElementInViewport(lastItem)) {
+        await this.pageController.loadNextPage();
+        lastItem = this.getLastItem();
       }
     };
   }
 
-  async loadNextPage() {
-    this.pager.isLoading = true;
-
-    const url = `${location.href}strona/${this.pager.currentPage + 1}/`;
-    const response = await fetch(url);
-    const html = await response.text();
-    console.log(html);
-
-    const nextPage = new DOMParser().parseFromString(html, 'text/html');
-    console.log(nextPage);
-
-    const nextPageItems = getAllItems(nextPage);
-    console.log(nextPageItems);
-    getAllItemsParent().append(...getAllItems(nextPage));
-
-    lazyLoadImages();
-    // console.log('appended all items from next page');
+  getLastItem() {
+    const allItems = getAllItems();
+    // TODO: get last element that is no an add
+    return allItems[allItems.length - 2];
   }
 }
