@@ -16,8 +16,10 @@ export class PageController {
 
     const nextPageNumber = this.page.currentPage + 1;
 
+    let nextPage;
+
     try {
-      const nextPage = await this.getNextPageItems(nextPageNumber);
+      nextPage = await this.getNextPageItems(nextPageNumber);
       const nextPageItems = getAllItems(nextPage);
 
       getAllItemsParent().append(...nextPageItems);
@@ -59,7 +61,6 @@ export class PageController {
     }
     const children = pager.querySelector("p").children;
     const lastChild = children[children.length - 1];
-    console.log(lastChild);
     return lastChild.textContent !== 'następna';
   }
 

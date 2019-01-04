@@ -1,8 +1,12 @@
-import {getAllItems, getAllItemsParent, getPager} from '../../queries';
+import {getAllItems, getAllItemsParent} from '../../queries';
 import {isElementInViewport} from '../../utils';
 import {PageController} from './page-controller';
 
 export class InfiniteScrollModule {
+  constructor(commentsHiderModule) {
+    this.commentsHiderModule = commentsHiderModule;
+  }
+
   init() {
     const urlData = this.parseCurrentUrl();
     console.log(`UrlData`, urlData);
@@ -11,7 +15,6 @@ export class InfiniteScrollModule {
         urlData.currentPage,
     );
 
-    // this.removePaginationBar();
     this.startOnScrollListener();
   }
 
@@ -25,16 +28,6 @@ export class InfiniteScrollModule {
     }
 
     return {basePath: result[1] || '/', currentPage: Number(result[2])};
-  }
-
-  removePaginationBar() {
-    const pager = getPager();
-
-    if (!pager) {
-      return;
-    }
-
-    pager.classList.add('force-hide');
   }
 
   startOnScrollListener() {
@@ -53,6 +46,7 @@ export class InfiniteScrollModule {
 
         this.addPageBar(lastItem, this.pageController.page.currentPage);
         this.updateUrl(this.pageController.page.currentPage);
+        this.commentsHiderModule.addCommentButtons();
 
         lastItem = this.getLastItem();
 
@@ -99,4 +93,4 @@ export class InfiniteScrollModule {
 
 }
 
-InfiniteScrollModule.moduleName = 'InfiniteScrollModule';
+InfiniteScrollModule.prototype.moduleName = 'InfiniteScrollModule';

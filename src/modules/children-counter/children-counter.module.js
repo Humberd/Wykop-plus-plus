@@ -32,4 +32,4 @@ export class ChildrenCounterModule {
   }
 }
 
-ChildrenCounterModule.moduleName = 'ChildrenCounterModule';
+ChildrenCounterModule.prototype.moduleName = 'ChildrenCounterModule';

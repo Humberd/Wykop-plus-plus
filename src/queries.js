@@ -1,6 +1,6 @@
 /* Mikroblog posts */
-export function getEntries() {
-  return document.querySelectorAll('#itemsStream > .iC:not(.link)');
+export function getEntries(doc = document) {
+  return doc.querySelectorAll('#itemsStream > .iC:not(.link)');
 }
 
 /* Entries + links */
