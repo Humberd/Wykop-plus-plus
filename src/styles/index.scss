@@ -58,6 +58,10 @@
   }
 }
 
+body.night .comment-expand:hover {
+  background-color: #5d5d5d;
+}
+
 .comment-expand {
   display: block;
   position: absolute;
@@ -67,7 +71,7 @@
   padding: 3px 0;
   top: 0;
   left: 3px;
-  transition: background-color 200ms;
+  transition: background-color 200ms, color 200ms;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 10px;
 
@@ -76,7 +80,7 @@
 
   &:hover {
     text-decoration: none;
-    background: #d3d3d3;
+    background-color: #d3d3d3;
   }
 }
 
