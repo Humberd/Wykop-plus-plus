@@ -11,7 +11,7 @@ export class PageController {
   }
 
   async getNextPageItems(nextPageNumber) {
-    const url = `${this.basePath}/strona/${nextPageNumber}/`;
+    const url = `${this.basePath}strona/${nextPageNumber}/`;
     const response = await fetch(url);
     const html = await response.text();
     return new DOMParser().parseFromString(html, 'text/html');
@@ -24,7 +24,6 @@ export class PageController {
 
     try {
       const nextPage = await this.getNextPageItems(nextPageNumber);
-      console.log(nextPage);
       const nextPageItems = getAllItems(nextPage);
 
       getAllItemsParent().append(...nextPageItems);
