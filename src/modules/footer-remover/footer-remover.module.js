@@ -10,3 +10,5 @@ export class FooterRemoverModule {
     getSite().classList.add('remove-footer');
   }
 }
+
+FooterRemoverModule.moduleName = 'FooterRemoverModule';

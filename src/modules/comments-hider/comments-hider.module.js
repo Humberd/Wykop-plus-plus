@@ -93,3 +93,5 @@ export class CommentsHiderModule {
   }
 
 }
+
+CommentsHiderModule.moduleName = 'CommentsHiderModule';

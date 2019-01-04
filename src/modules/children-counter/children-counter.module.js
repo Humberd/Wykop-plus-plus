@@ -1,7 +1,6 @@
 import {getEntries} from '../../queries';
 
 export class ChildrenCounterModule {
-
   init() {
     for (const entry of getEntries()) {
       this.createChildrenCounter(entry);
@@ -32,3 +31,5 @@ export class ChildrenCounterModule {
     return span;
   }
 }
+
+ChildrenCounterModule.moduleName = 'ChildrenCounterModule';

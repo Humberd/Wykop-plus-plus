@@ -52,7 +52,7 @@ export class InfiniteScrollModule {
 
   getLastItem() {
     const allItems = getAllItems();
-    // TODO: get last element that is no an add
+    // TODO: get last element that is not an add
     return allItems[allItems.length - 2];
   }
 
@@ -65,3 +65,5 @@ export class InfiniteScrollModule {
   }
 
 }
+
+InfiniteScrollModule.moduleName = 'InfiniteScrollModule';
