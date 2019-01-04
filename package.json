@@ -7,7 +7,7 @@
     "build-dev:watch": "webpack --watch --config webpack/webpack.config.dev.js  --colors",
     "build-prod": "webpack --config webpack/webpack.config.prod.js  --colors",
     "build-prod:watch": "webpack --watch --config webpack/webpack.config.prod.js  --colors",
-    "start": "webpack-dev-server --open --config webpack/webpack.config.dev.js"
+    "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "web-ext": "^2.9.3",
     "webpack": "^4.21.0",
     "webpack-chrome-extension-reloader": "^1.0.1",
     "webpack-cli": "^3.1.2",

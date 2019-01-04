@@ -6,7 +6,8 @@
   "author": "Maciej Sawicki",
   "permissions": [
     "storage",
-    "https://www.wykop.pl/*"
+    "https://www.wykop.pl/*",
+    "history"
   ],
   "content_scripts": [
     {

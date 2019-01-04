@@ -40,13 +40,14 @@ export class PageController {
 
   async getNextPageItems(nextPageNumber) {
     const url = this.getPageUrl(nextPageNumber);
+    console.log(url);
     const response = await fetch(url);
     const html = await response.text();
     return new DOMParser().parseFromString(html, 'text/html');
   }
 
   getPageUrl(pageNumber) {
-    return `${this.basePath}strona/${pageNumber}/`;
+    return `${location.origin}${this.basePath}strona/${pageNumber}/`;
   }
 
 }
