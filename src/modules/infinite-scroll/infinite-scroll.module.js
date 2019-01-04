@@ -11,7 +11,7 @@ export class InfiniteScrollModule {
         urlData.currentPage,
     );
 
-    this.removePaginationBar();
+    // this.removePaginationBar();
     this.startOnScrollListener();
   }
 
@@ -34,21 +34,38 @@ export class InfiniteScrollModule {
       return;
     }
 
-    pager.remove();
+    pager.classList.add('force-hide');
   }
 
   startOnScrollListener() {
     let lastItem = this.getLastItem();
 
-    document.onscroll = async () => {
+    if (this.pageController.page.isLast) {
+      console.log(
+          'The first page is also the last. Infinite scoll is disabled.');
+      return;
+    }
+
+    const scrollHandler = async () => {
       if (!this.pageController.page.isLoading &&
           isElementInViewport(lastItem)) {
         await this.pageController.loadNextPage();
+
         this.addPageBar(lastItem, this.pageController.page.currentPage);
         this.updateUrl(this.pageController.page.currentPage);
+
         lastItem = this.getLastItem();
+
+        if (this.pageController.page.isLast) {
+          console.log(
+              `Page ${this.pageController.page.currentPage} is the last one. Infinite scroll is disabled`);
+          window.removeEventListener('scroll', scrollHandler);
+        }
       }
     };
+
+    window.addEventListener('scroll', scrollHandler);
+
   }
 
   getLastItem() {
@@ -76,7 +93,8 @@ export class InfiniteScrollModule {
   }
 
   updateUrl(pageNumber) {
-    history.replaceState(null, null, this.pageController.getPageUrl(pageNumber));
+    history.replaceState(null, null,
+        this.pageController.getPageUrl(pageNumber));
   }
 
 }

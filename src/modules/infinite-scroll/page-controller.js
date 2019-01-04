@@ -1,10 +1,11 @@
-import {getAllItems, getAllItemsParent} from '../../queries';
+import {getAllItems, getAllItemsParent, getPager} from '../../queries';
 import {lazyLoadImages} from '../../utils';
 
 export class PageController {
   constructor(basePath, currentPage) {
     this.basePath = basePath;
     this.page = {
+      isLast: this.isLastPage(document),
       isLoading: false,
       currentPage: currentPage || 1,
     };
@@ -22,6 +23,7 @@ export class PageController {
       getAllItemsParent().append(...nextPageItems);
 
       this.page.currentPage = nextPageNumber;
+      this.page.isLast = this.isLastPage(nextPage);
 
       lazyLoadImages();
 
@@ -48,6 +50,17 @@ export class PageController {
 
   getPageUrl(pageNumber) {
     return `${location.origin}${this.basePath}strona/${pageNumber}/`;
+  }
+
+  isLastPage(page) {
+    const pager = getPager(page);
+    if (!pager) {
+      return true;
+    }
+    const children = pager.querySelector("p").children;
+    const lastChild = children[children.length - 1];
+    console.log(lastChild);
+    return lastChild.textContent !== 'następna';
   }
 
 }
