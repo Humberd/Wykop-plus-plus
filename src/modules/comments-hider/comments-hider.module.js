@@ -40,6 +40,8 @@ export class CommentsHiderModule {
         }
       };
     }
+
+    lazyLoadImages();
   }
 
   getArticleId() {
