@@ -10,13 +10,6 @@ export class PageController {
     };
   }
 
-  async getNextPageItems(nextPageNumber) {
-    const url = `${this.basePath}strona/${nextPageNumber}/`;
-    const response = await fetch(url);
-    const html = await response.text();
-    return new DOMParser().parseFromString(html, 'text/html');
-  }
-
   async loadNextPage() {
     this.page.isLoading = true;
 
@@ -33,13 +26,27 @@ export class PageController {
       lazyLoadImages();
 
       console.log(`Loading page ${nextPageNumber}: OK`);
+
     } catch (e) {
       console.warn(`Loading page ${nextPageNumber} FAILED`, e);
 
       throw e;
     } finally {
+
       this.page.isLoading = false;
     }
+
+  }
+
+  async getNextPageItems(nextPageNumber) {
+    const url = this.getPageUrl(nextPageNumber);
+    const response = await fetch(url);
+    const html = await response.text();
+    return new DOMParser().parseFromString(html, 'text/html');
+  }
+
+  getPageUrl(pageNumber) {
+    return `${this.basePath}strona/${pageNumber}/`;
   }
 
 }

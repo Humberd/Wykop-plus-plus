@@ -45,6 +45,7 @@ export class InfiniteScrollModule {
           isElementInViewport(lastItem)) {
         await this.pageController.loadNextPage();
         this.addPageBar(lastItem, this.pageController.page.currentPage);
+        this.updateUrl(this.pageController.page.currentPage);
         lastItem = this.getLastItem();
       }
     };
@@ -62,6 +63,10 @@ export class InfiniteScrollModule {
     elem.textContent = `Strona ${pageNumber}`;
 
     getAllItemsParent().insertBefore(elem, lastItem.nextSibling);
+  }
+
+  updateUrl(pageNumber) {
+    history.replaceState(null, null, this.pageController.getPageUrl(pageNumber));
   }
 
 }
