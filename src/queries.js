@@ -1,6 +1,6 @@
 /* Mikroblog posts */
-export function getEntries() {
-  return document.querySelectorAll('#itemsStream > .iC:not(.link)');
+export function getEntries(doc = document) {
+  return doc.querySelectorAll('#itemsStream > .iC:not(.link)');
 }
 
 /* Entries + links */
@@ -12,8 +12,8 @@ export function getAllItemsParent() {
   return document.querySelector('#itemsStream');
 }
 
-export function getPager() {
-  return document.querySelector('.pager');
+export function getPager(doc = document) {
+  return doc.querySelector('.pager');
 }
 
 export function getFooter() {

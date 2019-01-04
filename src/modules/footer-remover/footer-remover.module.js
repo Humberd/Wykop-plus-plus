@@ -11,4 +11,4 @@ export class FooterRemoverModule {
   }
 }
 
-FooterRemoverModule.moduleName = 'FooterRemoverModule';
+FooterRemoverModule.prototype.moduleName = 'FooterRemoverModule';

@@ -3,6 +3,11 @@ import {getEntries} from '../../queries';
 export class ChildrenCounterModule {
   init() {
     for (const entry of getEntries()) {
+      if (entry.classList.contains('children-counter-applied')) {
+        continue;
+      }
+      entry.classList.add('children-counter-applied');
+
       this.createChildrenCounter(entry);
     }
   }
@@ -32,4 +37,4 @@ export class ChildrenCounterModule {
   }
 }
 
-ChildrenCounterModule.moduleName = 'ChildrenCounterModule';
+ChildrenCounterModule.prototype.moduleName = 'ChildrenCounterModule';

@@ -46,7 +46,13 @@ const watchChanges = (dir, lastTimestamp) => {
 chrome.management.getSelf(self => {
 
   if (self.installType === 'development') {
+    try {
+      chrome.runtime.getPackageDirectoryEntry(dir => watchChanges(dir));
 
-    chrome.runtime.getPackageDirectoryEntry(dir => watchChanges(dir));
+    } catch (e) {
+      /* https://www.bountysource.com/issues/53450529-fix-browser-runtime-getpackagedirectoryentry */
+      console.error('Live reload is unavailable in this browser');
+      }
+
   }
 });

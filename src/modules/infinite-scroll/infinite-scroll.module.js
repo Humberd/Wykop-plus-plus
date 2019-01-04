@@ -1,8 +1,13 @@
-import {getAllItems, getAllItemsParent, getPager} from '../../queries';
+import {getAllItems, getAllItemsParent} from '../../queries';
 import {isElementInViewport} from '../../utils';
 import {PageController} from './page-controller';
 
 export class InfiniteScrollModule {
+  constructor(commentsHiderModule, childrenCounterModule) {
+    this.commentsHiderModule = commentsHiderModule;
+    this.childrenCounterModule = childrenCounterModule;
+  }
+
   init() {
     const urlData = this.parseCurrentUrl();
     console.log(`UrlData`, urlData);
@@ -11,7 +16,6 @@ export class InfiniteScrollModule {
         urlData.currentPage,
     );
 
-    this.removePaginationBar();
     this.startOnScrollListener();
   }
 
@@ -27,28 +31,37 @@ export class InfiniteScrollModule {
     return {basePath: result[1] || '/', currentPage: Number(result[2])};
   }
 
-  removePaginationBar() {
-    const pager = getPager();
-
-    if (!pager) {
-      return;
-    }
-
-    pager.remove();
-  }
-
   startOnScrollListener() {
     let lastItem = this.getLastItem();
 
-    document.onscroll = async () => {
+    if (this.pageController.page.isLast) {
+      console.log(
+          'The first page is also the last. Infinite scoll is disabled.');
+      return;
+    }
+
+    const scrollHandler = async () => {
       if (!this.pageController.page.isLoading &&
           isElementInViewport(lastItem)) {
         await this.pageController.loadNextPage();
+
         this.addPageBar(lastItem, this.pageController.page.currentPage);
         this.updateUrl(this.pageController.page.currentPage);
+        this.commentsHiderModule.addCommentButtons();
+        this.childrenCounterModule.init();
+
         lastItem = this.getLastItem();
+
+        if (this.pageController.page.isLast) {
+          console.log(
+              `Page ${this.pageController.page.currentPage} is the last one. Infinite scroll is disabled`);
+          window.removeEventListener('scroll', scrollHandler);
+        }
       }
     };
+
+    window.addEventListener('scroll', scrollHandler);
+
   }
 
   getLastItem() {
@@ -76,9 +89,10 @@ export class InfiniteScrollModule {
   }
 
   updateUrl(pageNumber) {
-    history.replaceState(null, null, this.pageController.getPageUrl(pageNumber));
+    history.replaceState(null, null,
+        this.pageController.getPageUrl(pageNumber));
   }
 
 }
 
-InfiniteScrollModule.moduleName = 'InfiniteScrollModule';
+InfiniteScrollModule.prototype.moduleName = 'InfiniteScrollModule';

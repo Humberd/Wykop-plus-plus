@@ -9,32 +9,43 @@ export class CommentsHiderModule {
   constructor() {
     const storage = new Storage(STORAGE_KEY);
     this.statePersistor = new CommentsState(storage);
+
+    this.articleId = this.getArticleId();
+
   }
 
   async init() {
     await this.statePersistor.initState();
 
-    const articleId = this.getArticleId();
+    this.addCommentButtons();
+  }
 
-    for (const commentBlock of getEntries()) {
+  addCommentButtons() {
+    const entries = getEntries();
+    for (const commentBlock of entries) {
+      if (commentBlock.classList.contains('commen-hider-applied')) {
+        continue;
+      }
+
       const aElem = this.createHideButton(commentBlock);
+      commentBlock.classList.add('comment-hider-applied');
 
       const commentId = commentBlock.querySelector('.dC').dataset.id;
 
-      if (this.isCommentHidden(articleId, commentId)) {
-        this.hideComments(aElem, commentBlock, articleId,
+      if (this.isCommentHidden(this.articleId, commentId)) {
+        this.hideComments(aElem, commentBlock, this.articleId,
             commentId);
       } else {
-        this.showComments(aElem, commentBlock, articleId,
+        this.showComments(aElem, commentBlock, this.articleId,
             commentId);
       }
 
       aElem.onclick = () => {
-        if (this.isCommentHidden(articleId, commentId)) {
-          this.showComments(aElem, commentBlock, articleId,
+        if (this.isCommentHidden(this.articleId, commentId)) {
+          this.showComments(aElem, commentBlock, this.articleId,
               commentId);
         } else {
-          this.hideComments(aElem, commentBlock, articleId,
+          this.hideComments(aElem, commentBlock, this.articleId,
               commentId);
           lazyLoadImages();
         }
@@ -94,4 +105,4 @@ export class CommentsHiderModule {
 
 }
 
-CommentsHiderModule.moduleName = 'CommentsHiderModule';
+CommentsHiderModule.prototype.moduleName = 'CommentsHiderModule';
