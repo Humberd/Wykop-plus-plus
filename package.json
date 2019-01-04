@@ -1,6 +1,6 @@
 {
   "name": "webpack-starter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu Wykop.pl",
   "scripts": {
     "build-dev": "webpack --config webpack/webpack.config.dev.js  --colors",
