@@ -1,4 +1,4 @@
-import {getAllItems, getPager} from '../../queries';
+import {getAllItems, getAllItemsParent, getPager} from '../../queries';
 import {isElementInViewport} from '../../utils';
 import {PageController} from './page-controller';
 
@@ -11,36 +11,8 @@ export class InfiniteScrollModule {
         urlData.currentPage,
     );
 
-    this.removePagination();
-    this.startListener();
-  }
-
-  removePagination() {
-    const pager = getPager();
-
-    if (!pager) {
-      return;
-    }
-
-    pager.remove();
-  }
-
-  startListener() {
-    let lastItem = this.getLastItem();
-
-    document.onscroll = async () => {
-      if (!this.pageController.page.isLoading &&
-          isElementInViewport(lastItem)) {
-        await this.pageController.loadNextPage();
-        lastItem = this.getLastItem();
-      }
-    };
-  }
-
-  getLastItem() {
-    const allItems = getAllItems();
-    // TODO: get last element that is no an add
-    return allItems[allItems.length - 2];
+    this.removePaginationBar();
+    this.startOnScrollListener();
   }
 
   parseCurrentUrl() {
@@ -53,6 +25,43 @@ export class InfiniteScrollModule {
     }
 
     return {basePath: result[1] || '/', currentPage: Number(result[2])};
+  }
+
+  removePaginationBar() {
+    const pager = getPager();
+
+    if (!pager) {
+      return;
+    }
+
+    pager.remove();
+  }
+
+  startOnScrollListener() {
+    let lastItem = this.getLastItem();
+
+    document.onscroll = async () => {
+      if (!this.pageController.page.isLoading &&
+          isElementInViewport(lastItem)) {
+        await this.pageController.loadNextPage();
+        this.addPageBar(lastItem, this.pageController.page.currentPage);
+        lastItem = this.getLastItem();
+      }
+    };
+  }
+
+  getLastItem() {
+    const allItems = getAllItems();
+    // TODO: get last element that is no an add
+    return allItems[allItems.length - 2];
+  }
+
+  addPageBar(lastItem, pageNumber) {
+    const elem = document.createElement('li');
+    elem.classList.add('next-page-bar');
+    elem.textContent = `Strona ${pageNumber}`;
+
+    getAllItemsParent().insertBefore(elem, lastItem.nextSibling);
   }
 
 }

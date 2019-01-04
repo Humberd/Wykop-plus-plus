@@ -4,7 +4,7 @@
    * execute it in the page context. */
 export function lazyLoadImages() {
   // language=JavaScript
-  var actualCode = `wykop.bindLazy()`;
+  var actualCode = `setTimeout(() => wykop.bindLazy(), 1000)`;
 
   var script = document.createElement('script');
   script.textContent = actualCode;

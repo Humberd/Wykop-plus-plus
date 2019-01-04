@@ -35,6 +35,8 @@ export class PageController {
       console.log(`Loading page ${nextPageNumber}: OK`);
     } catch (e) {
       console.warn(`Loading page ${nextPageNumber} FAILED`, e);
+
+      throw e;
     } finally {
       this.page.isLoading = false;
     }
