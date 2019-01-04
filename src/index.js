@@ -8,7 +8,7 @@ const MODULES = (() => {
   const commentsHiderModule = new CommentsHiderModule();
   const childrenCounterModule = new ChildrenCounterModule();
   const footerRemoverModule = new FooterRemoverModule();
-  const infiniteScrollModule = new InfiniteScrollModule(commentsHiderModule);
+  const infiniteScrollModule = new InfiniteScrollModule(commentsHiderModule, childrenCounterModule);
 
   return [
     commentsHiderModule,

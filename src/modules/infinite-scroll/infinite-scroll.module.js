@@ -3,8 +3,9 @@ import {isElementInViewport} from '../../utils';
 import {PageController} from './page-controller';
 
 export class InfiniteScrollModule {
-  constructor(commentsHiderModule) {
+  constructor(commentsHiderModule, childrenCounterModule) {
     this.commentsHiderModule = commentsHiderModule;
+    this.childrenCounterModule = childrenCounterModule;
   }
 
   init() {
@@ -47,6 +48,7 @@ export class InfiniteScrollModule {
         this.addPageBar(lastItem, this.pageController.page.currentPage);
         this.updateUrl(this.pageController.page.currentPage);
         this.commentsHiderModule.addCommentButtons();
+        this.childrenCounterModule.init();
 
         lastItem = this.getLastItem();
 
