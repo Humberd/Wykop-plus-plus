@@ -52,9 +52,19 @@ export class InfiniteScrollModule {
   }
 
   getLastItem() {
-    const allItems = getAllItems();
-    // TODO: get last element that is not an add
-    return allItems[allItems.length - 2];
+    /* Need to iterate from last to first */
+    for (const item of [...getAllItems()].reverse()) {
+      /* When the last item is and add and user has addblock
+       * it will not load the next page. This is why we need to get the last
+        * non-add item */
+      if (!this.isAdd(item)) {
+        return item;
+      }
+    }
+  }
+
+  isAdd(item) {
+    return item.querySelector('a[href="https://www.wykop.pl/reklama/"]');
   }
 
   addPageBar(lastItem, pageNumber) {
