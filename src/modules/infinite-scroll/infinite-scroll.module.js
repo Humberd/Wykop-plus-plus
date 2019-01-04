@@ -13,7 +13,13 @@ export class InfiniteScrollModule {
   }
 
   removePagination() {
-    getPager().remove();
+    const pager = getPager();
+
+    if (!pager) {
+      return;
+    }
+
+    pager.remove();
   }
 
   startListener() {

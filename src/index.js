@@ -10,4 +10,3 @@ import {FooterRemoverModule} from './modules/footer-remover/footer-remover.modul
   await new InfiniteScrollModule().init();
   await new FooterRemoverModule().init();
 })();
-
