@@ -5,7 +5,8 @@
   "name": "Wykop++",
   "author": "Maciej Sawicki",
   "permissions": [
-    "storage"
+    "storage",
+    "https://www.wykop.pl/*"
   ],
   "content_scripts": [
     {

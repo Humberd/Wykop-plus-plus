@@ -40,6 +40,8 @@ export class CommentsHiderModule {
         }
       };
     }
+
+    lazyLoadImages();
   }
 
   getArticleId() {
@@ -91,3 +93,5 @@ export class CommentsHiderModule {
   }
 
 }
+
+CommentsHiderModule.moduleName = 'CommentsHiderModule';
