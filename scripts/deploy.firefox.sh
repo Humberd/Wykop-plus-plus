@@ -83,3 +83,7 @@ if [ "$uploadId" == "null" ]; then
     echo "$response"
     exit 1
 fi
+
+echo "Uploading succeeded!"
+prettyJson=$(response | jq '.')
+echo "${prettyJson}"
