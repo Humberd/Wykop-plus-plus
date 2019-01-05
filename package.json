@@ -7,7 +7,8 @@
     "build-dev:watch": "webpack --watch --config webpack/webpack.config.dev.js  --colors",
     "build-prod": "webpack --config webpack/webpack.config.prod.js  --colors",
     "build-prod:watch": "webpack --watch --config webpack/webpack.config.prod.js  --colors",
-    "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl"
+    "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl",
+    "lint": "tslint --project tsconfig.json src/**/**.ts"
   },
   "repository": {
     "type": "git",
