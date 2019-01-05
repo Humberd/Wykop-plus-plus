@@ -75,7 +75,7 @@ echo "$authorizationHeader"
 
 # Upload app
 response=$(curl "https://addons.mozilla.org/api/v3/addons/" \
-    -g -X POST -F "upload=@./${BUILD_BUILDID}.zip" \
+    -g -X POST -F "upload=@${BUILD_BUILDID}.zip" \
     -H "$authorizationHeader")
 
 
