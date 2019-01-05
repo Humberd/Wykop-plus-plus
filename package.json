@@ -11,7 +11,7 @@
     "lint": "tslint --project tsconfig.json src/**/**.ts",
     "test": "ls",
     "preversion": "npm test && npm run lint",
-    "version": "npm run build && git add -A dist"
+    "version": "npm run build-prod && git add -A dist"
   },
   "repository": {
     "type": "git",
