@@ -4,7 +4,7 @@ pool:
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '10.15'
+      versionSpec: '11.6'
 
   - task: Npm@1
     displayName: 'npm ci'
