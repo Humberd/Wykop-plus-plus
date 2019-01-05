@@ -7,9 +7,6 @@ JWT_ISSUER="${JWT_ISSUER}"
 JWT_SECRET="${JWT_SECRET}"
 BUILD_BUILDID="${BUILD_BUILDID}"
 
-echo "$JWT_ISSUER"
-echo "$BUILD_BUILDID"
-
 function generateJWT() {
     jwtIssuer=$1;
     jwtSecret=$2;
@@ -20,7 +17,7 @@ function generateJWT() {
     }'
 
 
-    NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+    NEW_UUID=$(openssl rand -base64 20)
 
     payload='{
         "iss": "'"${jwtIssuer}"'",
@@ -71,15 +68,11 @@ function generateJWT() {
 jwt=$(generateJWT "$JWT_ISSUER" "$JWT_SECRET")
 authorizationHeader="Authorization: JWT $jwt"
 
-echo "$authorizationHeader"
-
 # Upload app
 response=$(curl "https://addons.mozilla.org/api/v3/addons/" \
     -g -X POST -F "upload=@${BUILD_BUILDID}.zip" \
     -H "$authorizationHeader")
 
-
-echo "$response"
 
 version=$(echo "$response" | jq -r .version)
 guid=$(echo "$response" | jq -r .guid)
@@ -90,5 +83,3 @@ if [ "$uploadId" == "null" ]; then
     echo "$response"
     exit 1
 fi
-
-echo "Uploading version ${version} Succeeded"
