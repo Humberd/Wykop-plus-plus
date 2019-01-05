@@ -13,3 +13,5 @@ yarn.lock
 .yarnclean
 .vscode
 .idea
+
+*.zip
