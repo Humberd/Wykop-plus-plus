@@ -1,9 +1,14 @@
 const fs = require('fs');
-const manifest = require('../public/manifest.json');
-const currentVersion = require('../package.json').version;
 
 console.log(__dirname);
 
+
+const currentVersion = require('../package.json').version;
+const manifest = require('./../public/manifest');
+
+
 manifest.version = currentVersion;
 
-fs.writeFileSync('../public/manifest.json', manifest,{});
+console.log(manifest);
+
+// fs.writeFileSync('./../public/manifest.json', manifest,{});
