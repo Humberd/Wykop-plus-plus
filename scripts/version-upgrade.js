@@ -4,7 +4,7 @@ console.log(__dirname);
 
 
 const currentVersion = require('../package.json').version;
-const manifest = require('./../public/manifest');
+const manifest = require('../public/manifest');
 
 
 manifest.version = currentVersion;
