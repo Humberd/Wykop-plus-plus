@@ -1,10 +1,11 @@
 import './styles/index.scss';
-import {CommentsHiderModule} from './modules/comments-hider/comments-hider.module';
-import {ChildrenCounterModule} from './modules/children-counter/children-counter.module';
-import {InfiniteScrollModule} from './modules/infinite-scroll/infinite-scroll.module';
-import {FooterRemoverModule} from './modules/footer-remover/footer-remover.module';
+import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
+import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
+import { InfiniteScrollModule } from './modules/infinite-scroll/infinite-scroll.module';
+import { FooterRemoverModule } from './modules/footer-remover/footer-remover.module';
+import { AppModule } from './modules/app-module';
 
-const MODULES = (() => {
+const MODULES: AppModule[] = (() => {
   const commentsHiderModule = new CommentsHiderModule();
   const childrenCounterModule = new ChildrenCounterModule();
   const footerRemoverModule = new FooterRemoverModule();
@@ -18,7 +19,7 @@ const MODULES = (() => {
   ];
 })();
 
-(async function() {
+(async function () {
   let successCounter = 0;
   for (const module of MODULES) {
     const moduleName = module.moduleName;

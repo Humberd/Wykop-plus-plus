@@ -1,7 +1,6 @@
 const Path = require('path');
 const Webpack = require('webpack');
 const merge = require('webpack-merge');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -19,26 +18,20 @@ module.exports = merge(common, {
     new Webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('dev'),
     }),
-    new Webpack.optimize.ModuleConcatenationPlugin(),
-    new MiniCssExtractPlugin({
-      filename: 'bundle.css',
-    }),
   ],
   module: {
     rules: [
+        /* Linting should only occur on dev, on pred we have a separate command */
       {
-        test: /\.(js)$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.s?css/i,
+        test: /\.ts$/,
+        enforce: 'pre',
         use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ],
-      },
-    ],
-  },
+          {
+            loader: 'tslint-loader',
+            options: { /* Loader options go here */ }
+          }
+        ]
+      }
+    ]
+  }
 });

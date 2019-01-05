@@ -4,13 +4,19 @@ pool:
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '10.8'
+      versionSpec: '10.15'
 
   - task: Npm@1
     displayName: 'npm ci'
     inputs:
       command: custom
       customCommand: ci
+
+  - task: Npm@1
+    displayName: 'npm lint'
+    inputs:
+      command: custom
+      customCommand: run lint
 
   - task: Npm@1
     displayName: 'npm run build-prod'

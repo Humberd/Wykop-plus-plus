@@ -7,19 +7,17 @@
     "build-dev:watch": "webpack --watch --config webpack/webpack.config.dev.js  --colors",
     "build-prod": "webpack --config webpack/webpack.config.prod.js  --colors",
     "build-prod:watch": "webpack --watch --config webpack/webpack.config.prod.js  --colors",
-    "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl"
+    "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl",
+    "lint": "tslint --project tsconfig.json src/**/**.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Humberd/Wykop-plus-plus.git"
   },
   "keywords": [
-    "webpack",
-    "startkit",
-    "frontend",
-    "es6",
-    "javascript",
-    "webdev"
+    "chrome-extension",
+    "firefox-addon",
+    "typescript"
   ],
   "author": "Maciej Sawicki",
   "license": "MIT",
@@ -27,31 +25,24 @@
     "url": "https://github.com/Humberd/Wykop-plus-plus/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
     "@types/chrome": "0.0.76",
-    "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.4",
     "css-loader": "^1.0.0",
-    "eslint": "^5.7.0",
-    "eslint-loader": "^2.1.1",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^4.0.0-beta.2",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.2",
+    "tslint": "^5.12.0",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.2.2",
     "web-ext": "^2.9.3",
     "webpack": "^4.21.0",
-    "webpack-chrome-extension-reloader": "^1.0.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9",
+    "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.1.4"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.0.0"
   }
 }

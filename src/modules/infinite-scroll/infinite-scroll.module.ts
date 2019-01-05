@@ -1,16 +1,22 @@
-import {getAllItems, getAllItemsParent} from '../../queries';
-import {isElementInViewport} from '../../utils';
-import {PageController} from './page-controller';
+import { getAllItems, getAllItemsParent } from '../../queries';
+import { isElementInViewport } from '../../utils';
+import { PageController } from './page-controller';
+import { AppModule } from '../app-module';
+import { ChildrenCounterModule } from '../children-counter/children-counter.module';
+import { CommentsHiderModule } from '../comments-hider/comments-hider.module';
 
-export class InfiniteScrollModule {
-  constructor(commentsHiderModule, childrenCounterModule) {
-    this.commentsHiderModule = commentsHiderModule;
-    this.childrenCounterModule = childrenCounterModule;
+export class InfiniteScrollModule extends AppModule {
+  private pageController: PageController;
+
+  constructor(private commentsHiderModule: CommentsHiderModule,
+              private childrenCounterModule: ChildrenCounterModule) {
+    super('InfiniteScrollModule');
   }
 
-  init() {
+  async init() {
     const urlData = this.parseCurrentUrl();
     console.log(`UrlData`, urlData);
+
     this.pageController = new PageController(
         urlData.basePath,
         urlData.currentPage,
@@ -76,11 +82,11 @@ export class InfiniteScrollModule {
     }
   }
 
-  isAdd(item) {
+  isAdd(item: Element) {
     return item.querySelector('a[href="https://www.wykop.pl/reklama/"]');
   }
 
-  addPageBar(lastItem, pageNumber) {
+  addPageBar(lastItem: Element, pageNumber: number) {
     const elem = document.createElement('li');
     elem.classList.add('next-page-bar');
     elem.textContent = `Strona ${pageNumber}`;
@@ -88,11 +94,9 @@ export class InfiniteScrollModule {
     getAllItemsParent().insertBefore(elem, lastItem.nextSibling);
   }
 
-  updateUrl(pageNumber) {
+  updateUrl(pageNumber: number) {
     history.replaceState(null, null,
         this.pageController.getPageUrl(pageNumber));
   }
 
 }
-
-InfiniteScrollModule.prototype.moduleName = 'InfiniteScrollModule';

@@ -1,7 +1,12 @@
-import {getEntries} from '../../queries';
+import { getEntries } from '../../queries';
+import { AppModule } from '../app-module';
 
-export class ChildrenCounterModule {
-  init() {
+export class ChildrenCounterModule extends AppModule {
+  constructor() {
+    super('ChildrenCounterModule');
+  }
+
+  async init() {
     for (const entry of getEntries()) {
       if (entry.classList.contains('children-counter-applied')) {
         continue;
@@ -12,7 +17,7 @@ export class ChildrenCounterModule {
     }
   }
 
-  createChildrenCounter(elem) {
+  createChildrenCounter(elem: Element) {
     const span = document.createElement('span');
     span.classList.add('child-counter');
 
@@ -36,5 +41,3 @@ export class ChildrenCounterModule {
     return span;
   }
 }
-
-ChildrenCounterModule.prototype.moduleName = 'ChildrenCounterModule';

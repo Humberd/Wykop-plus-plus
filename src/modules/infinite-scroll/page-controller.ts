@@ -1,9 +1,17 @@
-import {getAllItems, getAllItemsParent, getPager} from '../../queries';
-import {lazyLoadImages} from '../../utils';
+import { getAllItems, getAllItemsParent, getPager } from '../../queries';
+import { lazyLoadImages } from '../../utils';
+
+export interface Page {
+  isLast: boolean;
+  isLoading: boolean;
+  currentPage: number;
+}
 
 export class PageController {
-  constructor(basePath, currentPage) {
-    this.basePath = basePath;
+  page: Page;
+
+  constructor(private basePath: string,
+              currentPage: number) {
     this.page = {
       isLast: this.isLastPage(document),
       isLoading: false,
@@ -16,10 +24,9 @@ export class PageController {
 
     const nextPageNumber = this.page.currentPage + 1;
 
-    let nextPage;
 
     try {
-      nextPage = await this.getNextPageItems(nextPageNumber);
+      const nextPage = await this.getNextPageItems(nextPageNumber);
       const nextPageItems = getAllItems(nextPage);
 
       getAllItemsParent().append(...nextPageItems);
@@ -42,7 +49,7 @@ export class PageController {
 
   }
 
-  async getNextPageItems(nextPageNumber) {
+  async getNextPageItems(nextPageNumber: number) {
     const url = this.getPageUrl(nextPageNumber);
     console.log(url);
     const response = await fetch(url);
@@ -50,16 +57,16 @@ export class PageController {
     return new DOMParser().parseFromString(html, 'text/html');
   }
 
-  getPageUrl(pageNumber) {
+  getPageUrl(pageNumber: number) {
     return `${location.origin}${this.basePath}strona/${pageNumber}/`;
   }
 
-  isLastPage(page) {
+  isLastPage(page: Document) {
     const pager = getPager(page);
     if (!pager) {
       return true;
     }
-    const children = pager.querySelector("p").children;
+    const children = pager.querySelector('p').children;
     const lastChild = children[children.length - 1];
     return lastChild.textContent !== 'następna';
   }

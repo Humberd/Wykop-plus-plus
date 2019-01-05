@@ -1,10 +1,11 @@
 const Path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const Webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    app: Path.resolve(__dirname, '../src/index.js'),
+    app: Path.resolve(__dirname, '../src/index.ts'),
     background: Path.resolve(__dirname, '../src/background/index.js'),
   },
   output: {
@@ -13,23 +14,22 @@ module.exports = {
   },
   target: 'web',
   plugins: [
-    new CleanWebpackPlugin(['build'], {root: Path.resolve(__dirname, '..')}),
     new CopyWebpackPlugin([
       {from: Path.resolve(__dirname, '../public'), to: '.'},
     ]),
+    new MiniCssExtractPlugin({
+      filename: 'bundle.css',
+    }),
+    new Webpack.optimize.ModuleConcatenationPlugin()
   ],
   resolve: {
     alias: {
       '~': Path.resolve(__dirname, '../src'),
     },
+    extensions: ['.ts', '.js', '.scss'],
   },
   module: {
     rules: [
-      {
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: 'javascript/auto',
-      },
       {
         test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
         use: {
@@ -39,6 +39,19 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.s?css/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      }
     ],
   },
 };
