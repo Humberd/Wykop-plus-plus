@@ -3,7 +3,6 @@ const Webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {CheckerPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
   entry: {
@@ -23,8 +22,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
     }),
-    new Webpack.optimize.ModuleConcatenationPlugin(),
-    new CheckerPlugin(),
+    new Webpack.optimize.ModuleConcatenationPlugin()
   ],
   resolve: {
     alias: {
