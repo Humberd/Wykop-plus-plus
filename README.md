@@ -3,7 +3,7 @@
 
 # Wykop++
 
-Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu [Wykop.pl](Wykop.pl).
+Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu [Wykop.pl](https://wykop.pl).
 
 
 ### Dostępne na:
