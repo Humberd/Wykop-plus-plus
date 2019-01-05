@@ -2,7 +2,7 @@
    * This script does not have access to page context, so as a workaround
    * we have to create a script, append it to the page and then
    * execute it in the page context. */
-export function lazyLoadImages() {
+export function lazyLoadImages(): void {
   // language=JavaScript
   var actualCode = `setTimeout(() => wykop.bindLazy(), 1000)`;
 
@@ -12,12 +12,12 @@ export function lazyLoadImages() {
   script.remove();
 }
 
-export function scrollTo(el) {
+export function scrollTo(el: Element): void {
   el.scrollIntoView();
   window.scrollBy(0, -50);
 }
 
-export function isElementInViewport(el) {
+export function isElementInViewport(el: Element): boolean {
   var rect = el.getBoundingClientRect();
   const wh = (window.innerHeight || document.documentElement.clientHeight);
 

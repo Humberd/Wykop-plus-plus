@@ -3,11 +3,11 @@ const Webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CheckerPlugin } = require('awesome-typescript-loader')
+const {CheckerPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
   entry: {
-    app: Path.resolve(__dirname, '../src/index.js'),
+    app: Path.resolve(__dirname, '../src/index.ts'),
     background: Path.resolve(__dirname, '../src/background/index.js'),
   },
   output: {
@@ -24,12 +24,13 @@ module.exports = {
       filename: 'bundle.css',
     }),
     new Webpack.optimize.ModuleConcatenationPlugin(),
-    new CheckerPlugin()
+    new CheckerPlugin(),
   ],
   resolve: {
     alias: {
       '~': Path.resolve(__dirname, '../src'),
-    }
+    },
+    extensions: ['.ts', '.js', '.scss'],
   },
   module: {
     rules: [
@@ -53,8 +54,8 @@ module.exports = {
       {
         test: /\.ts$/,
         use: 'ts-loader',
-        exclude: /node_modules/
-      }
+        exclude: /node_modules/,
+      },
     ],
   },
 };

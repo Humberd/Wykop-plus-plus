@@ -52,7 +52,7 @@ chrome.management.getSelf(self => {
     } catch (e) {
       /* https://www.bountysource.com/issues/53450529-fix-browser-runtime-getpackagedirectoryentry */
       console.error('Live reload is unavailable in this browser');
-      }
+    }
 
   }
 });

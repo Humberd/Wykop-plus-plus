@@ -1,11 +1,10 @@
-export class Storage {
+export class AppStorage {
 
-  constructor(key) {
-    this.key = key;
-    this.storage = chrome.storage.local;
+  constructor(private key: string,
+              private storage = chrome.storage.local) {
   }
 
-  saveAll(state) {
+  saveAll(state: any): void {
     this.storage.set({
       [this.key]: state,
     });

@@ -1,13 +1,18 @@
-import {Storage} from '../../storage';
-import {CommentsState} from './comments-state';
-import {isElementInViewport, lazyLoadImages, scrollTo} from '../../utils';
-import {getEntries} from '../../queries';
+import { AppStorage } from '../../appStorage';
+import { CommentsState } from './comments-state';
+import { isElementInViewport, lazyLoadImages, scrollTo } from '../../utils';
+import { getEntries } from '../../queries';
+import { AppModule } from '../app-module';
 
-const STORAGE_KEY = 'comments-state';
+export class CommentsHiderModule extends AppModule {
+  private static readonly STORAGE_KEY = 'comments-state';
+  private statePersistor: CommentsState;
+  private articleId: string;
 
-export class CommentsHiderModule {
   constructor() {
-    const storage = new Storage(STORAGE_KEY);
+    super('CommentsHiderModule');
+
+    const storage = new AppStorage(CommentsHiderModule.STORAGE_KEY);
     this.statePersistor = new CommentsState(storage);
 
     this.articleId = this.getArticleId();
@@ -21,8 +26,7 @@ export class CommentsHiderModule {
   }
 
   addCommentButtons() {
-    const entries = getEntries();
-    for (const commentBlock of entries) {
+    for (const commentBlock of getEntries()) {
       if (commentBlock.classList.contains('commen-hider-applied')) {
         continue;
       }
@@ -30,6 +34,7 @@ export class CommentsHiderModule {
       const aElem = this.createHideButton(commentBlock);
       commentBlock.classList.add('comment-hider-applied');
 
+      // @ts-ignore
       const commentId = commentBlock.querySelector('.dC').dataset.id;
 
       if (this.isCommentHidden(this.articleId, commentId)) {
@@ -40,7 +45,7 @@ export class CommentsHiderModule {
             commentId);
       }
 
-      aElem.onclick = () => {
+      aElem.addEventListener('click', () => {
         if (this.isCommentHidden(this.articleId, commentId)) {
           this.showComments(aElem, commentBlock, this.articleId,
               commentId);
@@ -49,7 +54,7 @@ export class CommentsHiderModule {
               commentId);
           lazyLoadImages();
         }
-      };
+      });
     }
 
     lazyLoadImages();
@@ -63,7 +68,7 @@ export class CommentsHiderModule {
     return location.pathname.split('/')[2];
   }
 
-  createHideButton(elem) {
+  createHideButton(elem: Element): Element {
     const a = document.createElement('a');
     a.setAttribute('href', 'javascript:void(0)');
     a.classList.add('comment-expand');
@@ -73,7 +78,7 @@ export class CommentsHiderModule {
     return a;
   }
 
-  hideComments(aElem, parent, articleId, commentId) {
+  hideComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
     aElem.textContent = '[+]';
     parent.classList.add('collapsed');
     this.statePersistor.state.commentHidePersistor[articleId] = this.statePersistor.state.commentHidePersistor[articleId] ||
@@ -87,7 +92,7 @@ export class CommentsHiderModule {
     }
   }
 
-  showComments(aElem, parent, articleId, commentId) {
+  showComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
     aElem.textContent = '[-]';
     parent.classList.remove('collapsed');
     this.statePersistor.state.commentHidePersistor[articleId] = this.statePersistor.state.commentHidePersistor[articleId] ||
@@ -97,12 +102,10 @@ export class CommentsHiderModule {
     this.statePersistor.save();
   }
 
-  isCommentHidden(articleId, commentId) {
+  isCommentHidden(articleId: string, commentId: string): boolean {
     return this.statePersistor.state.commentHidePersistor[articleId] &&
         this.statePersistor.state.commentHidePersistor[articleId].collapsedThings &&
         this.statePersistor.state.commentHidePersistor[articleId].collapsedThings[commentId];
   }
 
 }
-
-CommentsHiderModule.prototype.moduleName = 'CommentsHiderModule';
