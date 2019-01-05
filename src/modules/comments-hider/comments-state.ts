@@ -8,7 +8,7 @@ export interface State {
         [key: string]: boolean
       }
     }
-  }
+  };
 }
 
 export class CommentsState {

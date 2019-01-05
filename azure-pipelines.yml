@@ -13,6 +13,12 @@ steps:
       customCommand: ci
 
   - task: Npm@1
+    displayName: 'npm lint'
+    inputs:
+      command: custom
+      customCommand: run lint
+
+  - task: Npm@1
     displayName: 'npm run build-prod'
     inputs:
       command: custom

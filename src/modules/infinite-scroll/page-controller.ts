@@ -4,7 +4,7 @@ import { lazyLoadImages } from '../../utils';
 export interface Page {
   isLast: boolean;
   isLoading: boolean;
-  currentPage: number
+  currentPage: number;
 }
 
 export class PageController {

@@ -1,6 +1,5 @@
 const Path = require('path');
 const Webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -15,7 +14,6 @@ module.exports = {
   },
   target: 'web',
   plugins: [
-    new CleanWebpackPlugin(['build/**'], {root: Path.resolve(__dirname, '..')}),
     new CopyWebpackPlugin([
       {from: Path.resolve(__dirname, '../public'), to: '.'},
     ]),
