@@ -19,4 +19,19 @@ module.exports = merge(common, {
       'process.env.NODE_ENV': JSON.stringify('dev'),
     }),
   ],
+  module: {
+    rules: [
+        /* Linting should only occur on dev, on pred we have a separate command */
+      {
+        test: /\.ts$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: { /* Loader options go here */ }
+          }
+        ]
+      }
+    ]
+  }
 });
