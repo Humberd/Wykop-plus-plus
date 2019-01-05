@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 console.log(__dirname);
 
@@ -11,5 +12,8 @@ console.log(manifest);
 console.log(__dirname);
 
 
+const foo = path.resolve(__dirname, '../public/manifest.json');
+
+console.log(foo);
 fs.writeFileSync('./manifest.json', JSON.stringify(manifest),
     {encoding: 'utf8'});
