@@ -8,7 +8,10 @@
     "build-prod": "webpack --config webpack/webpack.config.prod.js  --colors",
     "build-prod:watch": "webpack --watch --config webpack/webpack.config.prod.js  --colors",
     "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl",
-    "lint": "tslint --project tsconfig.json src/**/**.ts"
+    "lint": "tslint --project tsconfig.json src/**/**.ts",
+    "test": "ls",
+    "preversion": "npm test && npm run lint",
+    "version": "npm run build && git add -A dist"
   },
   "repository": {
     "type": "git",
