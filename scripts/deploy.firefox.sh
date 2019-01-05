@@ -7,6 +7,9 @@ JWT_ISSUER="${JWT_ISSUER}"
 JWT_SECRET="${JWT_SECRET}"
 BUILD_BUILDID="${BUILD_BUILDID}"
 
+echo "$JWT_ISSUER"
+echo "$BUILD_BUILDID"
+
 function generateJWT() {
     jwtIssuer=$1;
     jwtSecret=$2;
@@ -68,10 +71,15 @@ function generateJWT() {
 jwt=$(generateJWT "$JWT_ISSUER" "$JWT_SECRET")
 authorizationHeader="Authorization: JWT $jwt"
 
+echo "$authorizationHeader"
+
 # Upload app
 response=$(curl "https://addons.mozilla.org/api/v3/addons/" \
     -g -X POST -F "upload=@./${BUILD_BUILDID}.zip" \
     -H "$authorizationHeader")
+
+
+echo "$response"
 
 version=$(echo "$response" | jq -r .version)
 guid=$(echo "$response" | jq -r .guid)
