@@ -10,10 +10,6 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
   stats: 'normal',
-  bail: true,
-  output: {
-    filename: './[name].js',
-  },
   plugins: [
     new Webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('dev'),
@@ -21,7 +17,7 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
-        /* Linting should only occur on dev, on pred we have a separate command */
+        /* Linting should only occur on dev, on prod we have a separate command */
       {
         test: /\.ts$/,
         enforce: 'pre',

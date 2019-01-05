@@ -1,14 +1,17 @@
 {
-  "name": "webpack-starter",
-  "version": "1.1.5",
+  "name": "wykop-plus-plus",
+  "version": "1.1.29",
   "description": "Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu Wykop.pl",
   "scripts": {
-    "build-dev": "webpack --config webpack/webpack.config.dev.js  --colors",
-    "build-dev:watch": "webpack --watch --config webpack/webpack.config.dev.js  --colors",
-    "build-prod": "webpack --config webpack/webpack.config.prod.js  --colors",
-    "build-prod:watch": "webpack --watch --config webpack/webpack.config.prod.js  --colors",
+    "build-dev": "webpack --config webpack/webpack.config.dev.js --colors",
+    "build-dev:watch": "webpack --watch --config webpack/webpack.config.dev.js --colors",
+    "build-prod": "webpack --config webpack/webpack.config.prod.js --colors",
+    "build-prod:watch": "webpack --watch --config webpack/webpack.config.prod.js --colors",
     "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl",
-    "lint": "tslint --project tsconfig.json src/**/**.ts"
+    "lint": "tslint --project tsconfig.json src/**/**.ts",
+    "test": "ls",
+    "preversion": "npm test && npm run lint",
+    "version": "node scripts/version-upgrade.js && npm run build-prod -- --versionUpgrade && git add -A"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
   },
   "devDependencies": {
     "@types/chrome": "0.0.76",
+    "@types/node": "^10.12.18",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.4",
     "css-loader": "^1.0.0",
@@ -43,6 +47,7 @@
     "webpack": "^4.21.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "yargs": "^12.0.5"
   }
 }

@@ -5,7 +5,10 @@
 
 JWT_ISSUER="${JWT_ISSUER}"
 JWT_SECRET="${JWT_SECRET}"
+ADDON_ID="${ADDON_ID}"
 BUILD_BUILDID="${BUILD_BUILDID}"
+# TODO parametrize version
+VERSION="1.1.6"
 
 function generateJWT() {
     jwtIssuer=$1;
@@ -15,7 +18,6 @@ function generateJWT() {
         "typ": "JWT",
         "alg": "HS256"
     }'
-
 
     NEW_UUID=$(openssl rand -base64 20)
 
@@ -35,8 +37,6 @@ function generateJWT() {
         | .exp=($time_num + 60 * 5)
         '
     )
-
-
 
     base64_encode()
     {
@@ -69,10 +69,9 @@ jwt=$(generateJWT "$JWT_ISSUER" "$JWT_SECRET")
 authorizationHeader="Authorization: JWT $jwt"
 
 # Upload app
-response=$(curl "https://addons.mozilla.org/api/v3/addons/" \
-    -g -X POST -F "upload=@${BUILD_BUILDID}.zip" \
+response=$(curl "https://addons.mozilla.org/api/v3/addons/${ADDON_ID}/versions/${VERSION}/" \
+    -g -X PUT -F "upload=@${BUILD_BUILDID}.zip" \
     -H "$authorizationHeader")
-
 
 version=$(echo "$response" | jq -r .version)
 guid=$(echo "$response" | jq -r .guid)
@@ -83,3 +82,6 @@ if [ "$uploadId" == "null" ]; then
     echo "$response"
     exit 1
 fi
+
+echo "Uploading succeeded!"
+echo "$response" | jq '.' | echo
