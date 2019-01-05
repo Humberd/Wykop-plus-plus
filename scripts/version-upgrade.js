@@ -1,10 +1,8 @@
 const fs = require('fs');
-
-console.log(__dirname);
-
+const manifest = require('../public/manifest.json');
 const currentVersion = require('../package.json').version;
 
-const manifest = require('../public/manifest.json');
+console.log(__dirname);
 
 manifest.version = currentVersion;
 
