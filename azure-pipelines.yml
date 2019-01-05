@@ -34,7 +34,7 @@ steps:
       SourceFolder: '$(System.DefaultWorkingDirectory)'
       Contents: |
         build.zip
-        scripts/deploy.sh
+        scripts/*
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 
