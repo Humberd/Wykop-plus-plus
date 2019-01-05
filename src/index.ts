@@ -20,6 +20,7 @@ const MODULES: AppModule[] = (() => {
 })();
 
 (async function () {
+  console.log('doo');
   let successCounter = 0;
   for (const module of MODULES) {
     const moduleName = module.moduleName;

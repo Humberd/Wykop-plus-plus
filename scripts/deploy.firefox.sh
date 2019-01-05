@@ -7,6 +7,7 @@ JWT_ISSUER="${JWT_ISSUER}"
 JWT_SECRET="${JWT_SECRET}"
 ADDON_ID="${ADDON_ID}"
 BUILD_BUILDID="${BUILD_BUILDID}"
+# TODO parametrize version
 VERSION="1.1.6"
 
 function generateJWT() {

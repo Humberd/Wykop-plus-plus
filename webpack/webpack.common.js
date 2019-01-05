@@ -1,7 +1,14 @@
 const Path = require('path');
 const Webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const argv = require('yargs').argv;
+
+let buildDirectory = '../build';
+if (argv.versionUpgrade) {
+  buildDirectory = '../dist';
+}
 
 module.exports = {
   entry: {
@@ -9,9 +16,10 @@ module.exports = {
     background: Path.resolve(__dirname, '../src/background/index.js'),
   },
   output: {
-    path: Path.join(__dirname, '../build'),
-    filename: 'js/[name].js',
+    path: Path.join(__dirname, buildDirectory),
+    filename: './[name].js',
   },
+  bail: true,
   target: 'web',
   plugins: [
     new CopyWebpackPlugin([
@@ -20,7 +28,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
     }),
-    new Webpack.optimize.ModuleConcatenationPlugin()
+    new Webpack.optimize.ModuleConcatenationPlugin(),
+    new CleanWebpackPlugin([Path.join(__dirname, buildDirectory)], {root: Path.resolve(__dirname, '..')}),
   ],
   resolve: {
     alias: {
