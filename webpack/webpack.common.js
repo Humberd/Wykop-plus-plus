@@ -29,8 +29,7 @@ module.exports = {
   resolve: {
     alias: {
       '~': Path.resolve(__dirname, '../src'),
-    },
-    extensions: ['.ts', '.js']
+    }
   },
   module: {
     rules: [
@@ -52,9 +51,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.([tj])s?$/,
-        loader: ['awesome-typescript-loader'],
-        exclude: [/node_modules/],
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       }
     ],
   },
