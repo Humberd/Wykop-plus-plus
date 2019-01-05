@@ -11,7 +11,7 @@
     "lint": "tslint --project tsconfig.json src/**/**.ts",
     "test": "ls",
     "preversion": "npm test && npm run lint",
-    "version": "npm run build-prod -- --versionUpgrade && git add -A"
+    "version": "node scripts/version-upgrade.js && npm run build-prod -- --versionUpgrade && git add -A"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/chrome": "0.0.76",
+    "@types/node": "^10.12.18",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.4",
     "css-loader": "^1.0.0",
