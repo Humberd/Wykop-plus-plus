@@ -15,7 +15,7 @@ const MODULES: AppModule[] = (() => {
     commentsHiderModule,
     childrenCounterModule,
     footerRemoverModule,
-    infiniteScrollModule,
+    // infiniteScrollModule,
   ];
 })();
 
