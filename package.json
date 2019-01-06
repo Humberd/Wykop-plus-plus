@@ -9,9 +9,9 @@
     "build-prod:watch": "webpack --watch --config webpack/webpack.config.prod.js --colors",
     "firefox:watch": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url=wykop.pl",
     "lint": "tslint --project tsconfig.json src/**/**.ts",
-    "test": "ls",
+    "test": "echo \"todo\"",
     "preversion": "npm test && npm run lint",
-    "version": "node scripts/version-upgrade.js && npm run build-prod -- --versionUpgrade && git add -A"
+    "version": "npm run build-prod -- --versionUpgrade && git add -A"
   },
   "repository": {
     "type": "git",
