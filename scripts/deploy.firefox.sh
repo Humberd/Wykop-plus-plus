@@ -7,14 +7,7 @@ JWT_ISSUER="${JWT_ISSUER}"
 JWT_SECRET="${JWT_SECRET}"
 ADDON_ID="${ADDON_ID}"
 BUILD_BUILDID="${BUILD_BUILDID}"
-
-
-fileEnding="${BUILD_BUILDID}.zip"
-buildFile=$(ls *${fileEnding})
-
-# Build file has format: <version>.<buildId>.zip, for example: 1.1.5.232.zip
-# We need to extract 1.1.5
-VERSION=${buildFile%$fileEnding}
+VERSION=$(cat version.txt)
 
 function generateJWT() {
     jwtIssuer=$1;
@@ -76,7 +69,7 @@ authorizationHeader="Authorization: JWT $jwt"
 
 # Upload app
 response=$(curl "https://addons.mozilla.org/api/v3/addons/${ADDON_ID}/versions/${VERSION}/" \
-    -g -X PUT -F "upload=@${buildFile}" \
+    -g -X PUT -F "upload=@${BUILD_BUILDID}.zip" \
     -H "$authorizationHeader")
 
 version=$(echo "$response" | jq -r .version)
