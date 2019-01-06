@@ -24,10 +24,15 @@ steps:
       command: custom
       customCommand: run build-prod
 
+  - script: |
+      PACKAGE_VERSION=$(node -p "require('./package.json').version")
+      echo '##vso[task.setvariable variable=myVariable]'"${PACKAGE_VERSION}"
+
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build'
       includeRootFolder: false
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(PACKAGE_VERSION).$(Build.BuildId).zip'
 
   - task: CopyFiles@2
     inputs:
