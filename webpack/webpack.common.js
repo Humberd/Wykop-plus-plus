@@ -23,13 +23,26 @@ module.exports = {
   target: 'web',
   plugins: [
     new CopyWebpackPlugin([
-      {from: Path.resolve(__dirname, '../public'), to: '.'},
+      {
+        from: Path.resolve(__dirname, '../public'),
+        to: '.',
+        transform(content, path) {
+          if (path.endsWith('manifest.json')) {
+            const json = JSON.parse(content.toString('utf8'));
+            json.version = require('../package').version;
+
+            return Buffer.from(JSON.stringify(json, null, 2))
+          }
+          return content;
+        },
+      },
     ]),
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
     }),
     new Webpack.optimize.ModuleConcatenationPlugin(),
-    new CleanWebpackPlugin([Path.join(__dirname, buildDirectory)], {root: Path.resolve(__dirname, '..')}),
+    new CleanWebpackPlugin([Path.join(__dirname, buildDirectory)],
+        {root: Path.resolve(__dirname, '..')}),
   ],
   resolve: {
     alias: {
@@ -60,7 +73,7 @@ module.exports = {
         test: /\.ts$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      }
+      },
     ],
   },
 };
