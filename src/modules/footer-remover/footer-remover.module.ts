@@ -1,17 +1,20 @@
 import { getFooter, getSite } from '../../queries';
 import { AppModule } from '../app-module';
+import { AppEvents } from '../../events';
 
 export class FooterRemoverModule extends AppModule {
 
-  constructor() {
-    super('FooterRemoverModule');
+  static readonly MODULE_NAME = 'FooterRemoverModule';
+
+  constructor(private appEvents: AppEvents) {
+    super();
   }
 
   async init() {
     this.removeFooter();
   }
 
-  removeFooter() {
+  private removeFooter() {
     getFooter().remove();
     getSite().classList.add('remove-footer');
   }

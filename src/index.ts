@@ -3,6 +3,7 @@ import { AppModule } from './modules/app-module';
 import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
 import { AppEvents } from './events';
 import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
+import { FooterRemoverModule } from './modules/footer-remover/footer-remover.module';
 
 type AppModuleChild = new (appEvents: AppEvents) => AppModule;
 
@@ -12,7 +13,8 @@ type AppModuleChild = new (appEvents: AppEvents) => AppModule;
 
   await loadModules(appEvents, [
     CommentsHiderModule,
-    ChildrenCounterModule
+    ChildrenCounterModule,
+    FooterRemoverModule
   ]);
 
   await initEvents(appEvents);
