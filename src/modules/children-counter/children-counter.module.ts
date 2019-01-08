@@ -1,25 +1,53 @@
 import { getEntries } from '../../queries';
 import { AppModule } from '../app-module';
+import './styles.scss';
+import { AppEvents } from '../../events';
 
 export class ChildrenCounterModule extends AppModule {
-  constructor() {
-    super('ChildrenCounterModule');
+
+  static readonly MODULE_NAME = 'ChildrenCounterModule';
+
+  private static readonly ELEMENT_CLASS = 'x-children-counter';
+
+  constructor(private appEvents: AppEvents) {
+    super();
   }
 
   async init() {
-    for (const entry of getEntries()) {
-      if (entry.classList.contains('children-counter-applied')) {
-        continue;
-      }
-      entry.classList.add('children-counter-applied');
-
-      this.createChildrenCounter(entry);
-    }
+    this.listenForEvents();
   }
 
-  createChildrenCounter(elem: Element) {
+  private listenForEvents() {
+    this.appEvents.itemsLoaded
+        .asObservable()
+        .subscribe(() => this.addChildrenCounters());
+  }
+
+  private addChildrenCounters() {
+    const entries = getEntries();
+
+    let appliedCounter = 0;
+
+    for (const entry of entries) {
+
+      if (entry.querySelector(`.${ChildrenCounterModule.ELEMENT_CLASS}`)) {
+        continue;
+      }
+
+      this.createChildrenCounter(entry);
+
+      appliedCounter++;
+    }
+
+
+    console.log(`Added ${appliedCounter}/${entries.length} children counters`);
+
+  }
+
+  createChildrenCounter(elem: Element): Element {
     const span = document.createElement('span');
     span.classList.add('child-counter');
+    span.classList.add(ChildrenCounterModule.ELEMENT_CLASS);
 
     const moreElem = elem.querySelector('.sub .more a');
 

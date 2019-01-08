@@ -33,13 +33,13 @@ export class CommentsHiderModule extends AppModule {
   }
 
 
-  listenForEvents() {
+  private listenForEvents() {
     this.appEvents.itemsLoaded
         .asObservable()
         .subscribe(() => this.addCommentButtons());
   }
 
-  addCommentButtons() {
+  private addCommentButtons() {
     const entries = getEntries();
 
     let appliedCounter = 0;
@@ -78,7 +78,7 @@ export class CommentsHiderModule extends AppModule {
     lazyLoadImages();
   }
 
-  getArticleId() {
+  private getArticleId() {
     if (!location.pathname.startsWith('/link')) {
       return 'mikroblog';
     }
@@ -86,7 +86,7 @@ export class CommentsHiderModule extends AppModule {
     return location.pathname.split('/')[2];
   }
 
-  createHideButton(): Element {
+  private createHideButton(): Element {
     const a = document.createElement('a');
     a.setAttribute('href', 'javascript:void(0)');
     a.classList.add('comment-expand');
@@ -95,7 +95,7 @@ export class CommentsHiderModule extends AppModule {
     return a;
   }
 
-  hideComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
+  private hideComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
     aElem.textContent = '[+]';
     parent.classList.add('collapsed');
     this.statePersistor.state.commentHidePersistor[articleId] = this.statePersistor.state.commentHidePersistor[articleId] ||
@@ -109,7 +109,7 @@ export class CommentsHiderModule extends AppModule {
     }
   }
 
-  showComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
+  private showComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
     aElem.textContent = '[-]';
     parent.classList.remove('collapsed');
     this.statePersistor.state.commentHidePersistor[articleId] = this.statePersistor.state.commentHidePersistor[articleId] ||
@@ -119,7 +119,7 @@ export class CommentsHiderModule extends AppModule {
     this.statePersistor.save();
   }
 
-  isCommentHidden(articleId: string, commentId: string): boolean {
+  private isCommentHidden(articleId: string, commentId: string): boolean {
     return this.statePersistor.state.commentHidePersistor[articleId] &&
         this.statePersistor.state.commentHidePersistor[articleId].collapsedThings &&
         this.statePersistor.state.commentHidePersistor[articleId].collapsedThings[commentId];

@@ -2,6 +2,7 @@ import './styles/index.scss';
 import { AppModule } from './modules/app-module';
 import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
 import { AppEvents } from './events';
+import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
 
 type AppModuleChild = new (appEvents: AppEvents) => AppModule;
 
@@ -10,7 +11,8 @@ type AppModuleChild = new (appEvents: AppEvents) => AppModule;
   const appEvents = new AppEvents();
 
   await loadModules(appEvents, [
-    CommentsHiderModule
+    CommentsHiderModule,
+    ChildrenCounterModule
   ]);
 
   await initEvents(appEvents);
