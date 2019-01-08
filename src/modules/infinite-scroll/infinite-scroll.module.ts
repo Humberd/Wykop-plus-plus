@@ -10,7 +10,7 @@ export class InfiniteScrollModule extends AppModule {
 
   constructor(private commentsHiderModule: CommentsHiderModule,
               private childrenCounterModule: ChildrenCounterModule) {
-    super('InfiniteScrollModule');
+    super();
   }
 
   async init() {

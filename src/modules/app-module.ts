@@ -1,10 +1,15 @@
 export abstract class AppModule {
-  constructor(public moduleName: string) {
+  static readonly MODULE_NAME: string;
 
+  constructor(public moduleName?: string) {
   }
 
   async init() {
 
+  }
+
+  isTurnedOn(): boolean {
+    return true;
   }
 
 }

@@ -1,40 +1,45 @@
 import './styles/index.scss';
-import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
-import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
-import { InfiniteScrollModule } from './modules/infinite-scroll/infinite-scroll.module';
-import { FooterRemoverModule } from './modules/footer-remover/footer-remover.module';
 import { AppModule } from './modules/app-module';
+import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
+import { AppEvents } from './events';
 
-const MODULES: AppModule[] = (() => {
-  const commentsHiderModule = new CommentsHiderModule();
-  const childrenCounterModule = new ChildrenCounterModule();
-  const footerRemoverModule = new FooterRemoverModule();
-  const infiniteScrollModule = new InfiniteScrollModule(commentsHiderModule, childrenCounterModule);
+type AppModuleChild = new (appEvents: AppEvents) => AppModule;
 
-  return [
-    commentsHiderModule,
-    childrenCounterModule,
-    footerRemoverModule,
-    // infiniteScrollModule,
-  ];
-})();
 
 (async function () {
-  console.log('doo');
-  let successCounter = 0;
-  for (const module of MODULES) {
-    const moduleName = module.moduleName;
-    try {
-      await module.init();
-      console.log(`Loading Module ${moduleName}: OK`);
-      successCounter++;
-    } catch (e) {
-      console.error(`Module ${moduleName} initialization FAILED`, e);
-    }
-  }
+  const appEvents = new AppEvents();
 
-  console.log(
-      `--- Loaded Successfully: ${successCounter}. Fails: ${MODULES.length -
-      successCounter} ---`);
+  await loadModules(appEvents, [
+    CommentsHiderModule
+  ]);
+
+  await initEvents(appEvents);
 
 })();
+
+async function loadModules(appEvents: AppEvents, modules: AppModuleChild[]) {
+
+  let successCounter = 0;
+
+  for (const module of modules) {
+
+    try {
+      await loadModule(module, appEvents);
+      successCounter++;
+      console.log(`Module ${(module as any).MODULE_NAME}: OK`);
+    } catch (e) {
+      console.error(`Module ${(module as any).MODULE_NAME}: initialization FAILED`, e);
+    }
+
+  }
+
+  console.log(`--- Loaded ${successCounter}/${modules.length} modules ---`);
+}
+
+async function loadModule(module: AppModuleChild, appEvents: AppEvents) {
+  return new module(appEvents).init();
+}
+
+async function initEvents(appEvents: AppEvents) {
+  appEvents.itemsLoaded.next();
+}

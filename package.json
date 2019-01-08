@@ -49,5 +49,8 @@
     "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.1.4",
     "yargs": "^12.0.5"
+  },
+  "dependencies": {
+    "rxjs": "^6.3.3"
   }
 }
