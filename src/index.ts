@@ -46,5 +46,5 @@ async function loadModule(module: AppModuleChild, appEvents: AppEvents) {
 }
 
 async function initEvents(appEvents: AppEvents) {
-  appEvents.onItemsLoaded.next();
+  appEvents.onItemsLoaded.next({isInitial: true});
 }

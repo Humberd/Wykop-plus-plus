@@ -1,4 +1,4 @@
-import { AppStorage } from '../../appStorage';
+import { AppStorage } from '../../app-storage';
 
 export interface State {
   commentHidePersistor: {

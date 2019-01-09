@@ -29,7 +29,7 @@ export class PageController {
     };
   }
 
-  async loadNextPage() {
+  async loadNextPage(): Promise<NodeListOf<Element>> {
     this.page.isLoading = true;
 
     const nextPageNumber = this.page.currentPage + 1;
@@ -48,6 +48,7 @@ export class PageController {
 
       console.log(`Loading page ${nextPageNumber}: OK`);
 
+      return nextPageItems;
     } catch (e) {
       console.warn(`Loading page ${nextPageNumber} FAILED`, e);
 

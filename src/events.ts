@@ -1,10 +1,13 @@
-// @ts-ignore
 import { Subject } from 'rxjs';
 
 export class AppEvents {
 
-  readonly onItemsLoaded = new Subject();
+  readonly onItemsLoaded = new Subject<OnItemsLoadedPayload>();
 
-  readonly onCommentHidden = new Subject();
+  readonly onCommentHid = new Subject();
 
+}
+
+export interface OnItemsLoadedPayload {
+  isInitial: boolean;
 }

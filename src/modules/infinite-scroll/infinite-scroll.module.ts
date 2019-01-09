@@ -1,9 +1,9 @@
-import { getAllItems, getAllItemsParent } from '../../queries';
+import { getAllItems, getAllItemsParent, getPager } from '../../queries';
 import { isElementInViewport } from '../../utils';
 import { PageController, PageInfo } from './page-controller';
 import { AppModule } from '../app-module';
 import { AppEvents } from '../../events';
-import './styles.scss'
+import './styles.scss';
 
 export class InfiniteScrollModule extends AppModule {
 
@@ -39,7 +39,7 @@ export class InfiniteScrollModule extends AppModule {
   }
 
   private startOnScrollListener() {
-    let lastItem = this.getLastItem();
+    const elemTriggeringNextPage = getPager();
 
     if (this.pageController.page.isLast) {
       console.log('The first page is also the last. Infinite scoll is disabled.');
@@ -47,13 +47,13 @@ export class InfiniteScrollModule extends AppModule {
     }
 
     const scrollHandler = async () => {
-      if (!this.pageController.page.isLoading && isElementInViewport(lastItem)) {
+      if (!this.pageController.page.isLoading && isElementInViewport(elemTriggeringNextPage)) {
+        const previousPageLastItem = this.getLastItem();
+
         await this.pageController.loadNextPage();
 
-        this.addPageBar(lastItem, this.pageController.page.currentPage);
-        this.appEvents.onItemsLoaded.next();
-
-        lastItem = this.getLastItem();
+        this.addPageBar(previousPageLastItem, this.pageController.page.currentPage);
+        this.appEvents.onItemsLoaded.next({isInitial: false});
 
         if (this.pageController.page.isLast) {
           console.log(`Page ${this.pageController.page.currentPage} is the last one. Infinite scroll is disabled`);
@@ -64,22 +64,15 @@ export class InfiniteScrollModule extends AppModule {
 
     window.addEventListener('scroll', scrollHandler);
 
+    this.appEvents.onCommentHid
+        .asObservable()
+        .subscribe(scrollHandler);
+
   }
 
   private getLastItem(): Element {
-    /* Need to iterate from last to first */
-    for (const item of [...getAllItems()].reverse()) {
-      /* When the last item is and add and user has addblock
-       * it will not load the next page. This is why we need to get the last
-        * non-add item */
-      if (!this.isAdvertisement(item)) {
-        return item;
-      }
-    }
-  }
-
-  private isAdvertisement(item: Element): boolean {
-    return !!item.querySelector('a[href="https://www.wykop.pl/reklama/"]');
+    const items = getAllItems();
+    return items[items.length - 1];
   }
 
   private addPageBar(lastItem: Element, pageNumber: number) {
