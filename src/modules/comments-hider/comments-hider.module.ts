@@ -1,16 +1,23 @@
-import { AppStorage } from '../../appStorage';
+import { AppStorage } from '../../app-storage';
 import { CommentsState } from './comments-state';
-import { isElementInViewport, lazyLoadImages, scrollTo } from '../../utils';
+import { isElementInViewport, lazyLoadImages, scrollTo, scrollToTop } from '../../utils';
 import { getEntries } from '../../queries';
 import { AppModule } from '../app-module';
+import { AppEvents, OnItemsLoadedPayload } from '../../events';
+import './styles.scss';
 
 export class CommentsHiderModule extends AppModule {
+
+  static readonly MODULE_NAME = 'CommentsHiderModule';
+
   private static readonly STORAGE_KEY = 'comments-state';
+  private static readonly ELEMENT_CLASS = 'x-comment-hider';
+
   private statePersistor: CommentsState;
   private articleId: string;
 
-  constructor() {
-    super('CommentsHiderModule');
+  constructor(private appEvents: AppEvents) {
+    super();
 
     const storage = new AppStorage(CommentsHiderModule.STORAGE_KEY);
     this.statePersistor = new CommentsState(storage);
@@ -22,45 +29,78 @@ export class CommentsHiderModule extends AppModule {
   async init() {
     await this.statePersistor.initState();
 
-    this.addCommentButtons();
+    this.listenForEvents();
   }
 
-  addCommentButtons() {
-    for (const commentBlock of getEntries()) {
-      if (commentBlock.classList.contains('commen-hider-applied')) {
+
+  private listenForEvents() {
+    this.appEvents.onItemsLoaded
+        .asObservable()
+        .subscribe((payload: OnItemsLoadedPayload) => this.addCommentButtons(payload.isInitial));
+  }
+
+  private addCommentButtons(isInitial: boolean) {
+
+    const entries = getEntries();
+
+    let appliedCounter = 0;
+    let firstShownComment: Element;
+
+    for (const commentBlock of entries) {
+      if (commentBlock.querySelector(`.${CommentsHiderModule.ELEMENT_CLASS}`)) {
         continue;
       }
 
       const aElem = this.createHideButton(commentBlock);
-      commentBlock.classList.add('comment-hider-applied');
 
       // @ts-ignore
       const commentId = commentBlock.querySelector('.dC').dataset.id;
 
       if (this.isCommentHidden(this.articleId, commentId)) {
-        this.hideComments(aElem, commentBlock, this.articleId,
-            commentId);
+        this.hideComments(aElem, commentBlock, this.articleId, commentId);
       } else {
-        this.showComments(aElem, commentBlock, this.articleId,
-            commentId);
+        this.showComments(aElem, commentBlock, this.articleId, commentId);
+        if (!firstShownComment) {
+          firstShownComment = commentBlock;
+        }
       }
 
       aElem.addEventListener('click', () => {
         if (this.isCommentHidden(this.articleId, commentId)) {
-          this.showComments(aElem, commentBlock, this.articleId,
-              commentId);
+          this.showComments(aElem, commentBlock, this.articleId, commentId);
         } else {
-          this.hideComments(aElem, commentBlock, this.articleId,
-              commentId);
+          this.hideComments(aElem, commentBlock, this.articleId, commentId);
+          this.appEvents.onCommentHid.next();
+          if (!isElementInViewport(commentBlock)) {
+            scrollTo(commentBlock);
+          }
           lazyLoadImages();
         }
       });
+
+      appliedCounter++;
     }
 
+    console.log(`Added ${appliedCounter}/${entries.length} comments hide buttons`);
+
     lazyLoadImages();
+
+    /* We want to scroll only on the initial page load, because it would
+     * make user angry, that we are scrilling to the bottom when user is still at the top
+
+     * Need to use setTimeouts, because it won't scroll immediately */
+    if (isInitial && firstShownComment) {
+      setTimeout(() => {
+        scrollTo(firstShownComment);
+      }, 500);
+    } else if (!firstShownComment && entries.length) {
+      setTimeout(() => {
+        scrollToTop();
+      }, 500);
+    }
   }
 
-  getArticleId() {
+  private getArticleId() {
     if (!location.pathname.startsWith('/link')) {
       return 'mikroblog';
     }
@@ -68,17 +108,18 @@ export class CommentsHiderModule extends AppModule {
     return location.pathname.split('/')[2];
   }
 
-  createHideButton(elem: Element): Element {
+  private createHideButton(parent: Element): Element {
     const a = document.createElement('a');
     a.setAttribute('href', 'javascript:void(0)');
     a.classList.add('comment-expand');
+    a.classList.add(CommentsHiderModule.ELEMENT_CLASS);
 
-    elem.prepend(a);
+    parent.prepend(a);
 
     return a;
   }
 
-  hideComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
+  private hideComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
     aElem.textContent = '[+]';
     parent.classList.add('collapsed');
     this.statePersistor.state.commentHidePersistor[articleId] = this.statePersistor.state.commentHidePersistor[articleId] ||
@@ -86,13 +127,9 @@ export class CommentsHiderModule extends AppModule {
     this.statePersistor.state.commentHidePersistor[articleId].lastUpdate = new Date().getTime();
     this.statePersistor.state.commentHidePersistor[articleId].collapsedThings[commentId] = true;
     this.statePersistor.save();
-
-    if (!isElementInViewport(parent)) {
-      scrollTo(parent);
-    }
   }
 
-  showComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
+  private showComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
     aElem.textContent = '[-]';
     parent.classList.remove('collapsed');
     this.statePersistor.state.commentHidePersistor[articleId] = this.statePersistor.state.commentHidePersistor[articleId] ||
@@ -102,7 +139,7 @@ export class CommentsHiderModule extends AppModule {
     this.statePersistor.save();
   }
 
-  isCommentHidden(articleId: string, commentId: string): boolean {
+  private isCommentHidden(articleId: string, commentId: string): boolean {
     return this.statePersistor.state.commentHidePersistor[articleId] &&
         this.statePersistor.state.commentHidePersistor[articleId].collapsedThings &&
         this.statePersistor.state.commentHidePersistor[articleId].collapsedThings[commentId];

@@ -6,9 +6,11 @@
     "noImplicitAny": true,
     "module": "es6",
     "target": "es2017",
+    "moduleResolution": "node",
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": [
     "node_modules"

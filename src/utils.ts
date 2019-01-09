@@ -13,8 +13,13 @@ export function lazyLoadImages(): void {
 }
 
 export function scrollTo(el: Element): void {
+  console.log('Scrolling to', el);
   el.scrollIntoView();
   window.scrollBy(0, -50);
+}
+
+export function scrollToTop(): void {
+  return window.scrollTo(0, 0);
 }
 
 export function isElementInViewport(el: Element): boolean {

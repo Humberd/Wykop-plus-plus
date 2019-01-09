@@ -1,8 +1,3 @@
-.force-hide {
-	display: none !important;
-}
-
-/* Comments hider Module */
 #itemsStream > .iC:not(.link) {
 	position: relative;
 
@@ -86,20 +81,4 @@ body.night .comment-expand:hover {
 		text-decoration: none;
 		background-color: #d3d3d3;
 	}
-}
-
-/* Children counter Module */
-.child-counter {
-	margin-left: 7px;
-}
-
-/* Footer remover Module */
-.remove-footer {
-	margin-bottom: 0 !important;
-}
-
-/* Infinite scroll */
-.next-page-bar {
-	text-align: center;
-	padding: 4px;
 }
