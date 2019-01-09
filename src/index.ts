@@ -4,6 +4,7 @@ import { CommentsHiderModule } from './modules/comments-hider/comments-hider.mod
 import { AppEvents } from './events';
 import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
 import { FooterRemoverModule } from './modules/footer-remover/footer-remover.module';
+import { InfiniteScrollModule } from './modules/infinite-scroll/infinite-scroll.module';
 
 type AppModuleChild = new (appEvents: AppEvents) => AppModule;
 
@@ -14,7 +15,8 @@ type AppModuleChild = new (appEvents: AppEvents) => AppModule;
   await loadModules(appEvents, [
     CommentsHiderModule,
     ChildrenCounterModule,
-    FooterRemoverModule
+    FooterRemoverModule,
+    InfiniteScrollModule
   ]);
 
   await initEvents(appEvents);

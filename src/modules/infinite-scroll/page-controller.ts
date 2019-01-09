@@ -7,11 +7,21 @@ export interface Page {
   currentPage: number;
 }
 
+export interface PageInfo {
+  basePath: string;
+  currentPage: number;
+}
+
 export class PageController {
   page: Page;
 
   constructor(private basePath: string,
               currentPage: number) {
+
+    if (!basePath.endsWith('/')) {
+      this.basePath += '/';
+    }
+
     this.page = {
       isLast: this.isLastPage(document),
       isLoading: false,
@@ -49,7 +59,7 @@ export class PageController {
 
   }
 
-  async getNextPageItems(nextPageNumber: number) {
+  private async getNextPageItems(nextPageNumber: number) {
     const url = this.getPageUrl(nextPageNumber);
     console.log(url);
     const response = await fetch(url);
@@ -57,11 +67,11 @@ export class PageController {
     return new DOMParser().parseFromString(html, 'text/html');
   }
 
-  getPageUrl(pageNumber: number) {
+  getPageUrl(pageNumber: number): string {
     return `${location.origin}${this.basePath}strona/${pageNumber}/`;
   }
 
-  isLastPage(page: Document) {
+  private isLastPage(page: Document): boolean {
     const pager = getPager(page);
     if (!pager) {
       return true;
