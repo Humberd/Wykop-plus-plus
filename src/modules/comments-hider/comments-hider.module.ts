@@ -34,7 +34,7 @@ export class CommentsHiderModule extends AppModule {
 
 
   private listenForEvents() {
-    this.appEvents.itemsLoaded
+    this.appEvents.onItemsLoaded
         .asObservable()
         .subscribe(() => this.addCommentButtons());
   }

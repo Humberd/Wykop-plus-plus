@@ -4,6 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const argv = require('yargs').argv;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let buildDirectory = '../build';
 if (argv.versionUpgrade) {
@@ -14,6 +15,7 @@ module.exports = {
   entry: {
     app: Path.resolve(__dirname, '../src/index.ts'),
     background: Path.resolve(__dirname, '../src/background/index.js'),
+    options: Path.resolve(__dirname, '../src/options/options.ts'),
   },
   output: {
     path: Path.join(__dirname, buildDirectory),
@@ -31,7 +33,7 @@ module.exports = {
             const json = JSON.parse(content.toString('utf8'));
             json.version = require('../package').version;
 
-            return Buffer.from(JSON.stringify(json, null, 2))
+            return Buffer.from(JSON.stringify(json, null, 2));
           }
           return content;
         },
@@ -43,6 +45,11 @@ module.exports = {
     new Webpack.optimize.ModuleConcatenationPlugin(),
     new CleanWebpackPlugin([Path.join(__dirname, buildDirectory)],
         {root: Path.resolve(__dirname, '..')}),
+    new HtmlWebpackPlugin({
+      filename: 'options.html',
+      template: 'src/options/options.html',
+      chunks: ['options'],
+    }),
   ],
   resolve: {
     alias: {
@@ -70,10 +77,15 @@ module.exports = {
         ],
       },
       {
-        test: /\.ts$/,
+        test: /\.ts$/i,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.html$/,
+        loader: "html-loader",
+        exclude: /node_modules/
+      }
     ],
   },
 };

@@ -1,6 +1,7 @@
 import { getFooter, getSite } from '../../queries';
 import { AppModule } from '../app-module';
 import { AppEvents } from '../../events';
+import './styles.scss';
 
 export class FooterRemoverModule extends AppModule {
 

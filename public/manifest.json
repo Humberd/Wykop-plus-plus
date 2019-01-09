@@ -4,6 +4,10 @@
   "description": "Dodatkowe funkcjonalnosci dla Wykop.pl",
   "name": "Wykop++",
   "author": "Maciej Sawicki",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "permissions": [
     "storage",
     "https://www.wykop.pl/*",

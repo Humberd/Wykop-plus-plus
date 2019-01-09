@@ -3,6 +3,7 @@ import { isElementInViewport } from '../../utils';
 import { PageController, PageInfo } from './page-controller';
 import { AppModule } from '../app-module';
 import { AppEvents } from '../../events';
+import './styles.scss'
 
 export class InfiniteScrollModule extends AppModule {
 
@@ -50,7 +51,7 @@ export class InfiniteScrollModule extends AppModule {
         await this.pageController.loadNextPage();
 
         this.addPageBar(lastItem, this.pageController.page.currentPage);
-        this.appEvents.itemsLoaded.next();
+        this.appEvents.onItemsLoaded.next();
 
         lastItem = this.getLastItem();
 
@@ -71,13 +72,13 @@ export class InfiniteScrollModule extends AppModule {
       /* When the last item is and add and user has addblock
        * it will not load the next page. This is why we need to get the last
         * non-add item */
-      if (!this.isAddvertisement(item)) {
+      if (!this.isAdvertisement(item)) {
         return item;
       }
     }
   }
 
-  private isAddvertisement(item: Element): boolean {
+  private isAdvertisement(item: Element): boolean {
     return !!item.querySelector('a[href="https://www.wykop.pl/reklama/"]');
   }
 

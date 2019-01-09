@@ -1,4 +1,3 @@
-import './styles/index.scss';
 import { AppModule } from './modules/app-module';
 import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
 import { AppEvents } from './events';
@@ -47,5 +46,5 @@ async function loadModule(module: AppModuleChild, appEvents: AppEvents) {
 }
 
 async function initEvents(appEvents: AppEvents) {
-  appEvents.itemsLoaded.next();
+  appEvents.onItemsLoaded.next();
 }

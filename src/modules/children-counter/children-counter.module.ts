@@ -18,7 +18,7 @@ export class ChildrenCounterModule extends AppModule {
   }
 
   private listenForEvents() {
-    this.appEvents.itemsLoaded
+    this.appEvents.onItemsLoaded
         .asObservable()
         .subscribe(() => this.addChildrenCounters());
   }

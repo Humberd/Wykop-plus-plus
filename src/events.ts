@@ -3,6 +3,8 @@ import { Subject } from 'rxjs';
 
 export class AppEvents {
 
-  readonly itemsLoaded = new Subject();
+  readonly onItemsLoaded = new Subject();
+
+  readonly onCommentHidden = new Subject();
 
 }
