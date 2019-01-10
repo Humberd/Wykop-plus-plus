@@ -89,11 +89,7 @@ export class CommentsHiderModule extends AppModule {
      * make user angry, that we are scrilling to the bottom when user is still at the top
 
      * Need to use setTimeouts, because it won't scroll immediately */
-    if (isInitial && firstShownComment) {
-      setTimeout(() => {
-        scrollTo(firstShownComment);
-      }, 500);
-    } else if (!firstShownComment && entries.length) {
+    if (isInitial) {
       setTimeout(() => {
         scrollToTop();
       }, 500);
