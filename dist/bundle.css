@@ -1,7 +1,3 @@
-.force-hide {
-  display: none !important; }
-
-/* Comments hider Module */
 #itemsStream > .iC:not(.link) {
   position: relative;
   /* Parent comment */ }
@@ -17,6 +13,8 @@
   #itemsStream > .iC:not(.link).collapsed .text {
     display: none; }
   #itemsStream > .iC:not(.link).collapsed .actions {
+    display: none; }
+  #itemsStream > .iC:not(.link).collapsed .survey {
     display: none; }
   #itemsStream > .iC:not(.link).collapsed .author.hlight {
     border-bottom: unset !important; }
@@ -54,15 +52,12 @@ body.night .comment-expand:hover {
     text-decoration: none;
     background-color: #d3d3d3; }
 
-/* Children counter Module */
 .child-counter {
   margin-left: 7px; }
 
-/* Footer remover Module */
 .remove-footer {
   margin-bottom: 0 !important; }
 
-/* Infinite scroll */
 .next-page-bar {
   text-align: center;
   padding: 4px; }
