@@ -10,7 +10,7 @@ export type AppModuleChild = new (...args: any[]) => AppModule;
 export type ServiceType = new (...args: any[]) => any;
 
 export const SERVICES: ServiceType[] = [
-    AppEvents
+  AppEvents
 ];
 
 export const MODUELS: AppModuleChild[] = [
