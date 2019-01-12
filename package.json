@@ -52,6 +52,8 @@
     "yargs": "^12.0.5"
   },
   "dependencies": {
-    "rxjs": "^6.3.3"
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.3.3",
+    "typedi": "^0.8.0"
   }
 }

@@ -1,35 +1,24 @@
-import { AppModule } from './modules/app-module';
-import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
-import { AppEvents } from './events';
-import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
-import { FooterRemoverModule } from './modules/footer-remover/footer-remover.module';
-import { InfiniteScrollModule } from './modules/infinite-scroll/infinite-scroll.module';
-
-type AppModuleChild = new (appEvents: AppEvents) => AppModule;
-
+import 'reflect-metadata';
+import { AppEvents } from './services/events';
+import { AppModuleChild, MODUELS } from './modules';
+import { Container } from 'typedi';
+import { getEntries } from './utils/queries';
 
 (async function () {
-  const appEvents = new AppEvents();
+  await loadModules(MODUELS);
 
-  await loadModules(appEvents, [
-    CommentsHiderModule,
-    ChildrenCounterModule,
-    FooterRemoverModule,
-    InfiniteScrollModule
-  ]);
-
-  await initEvents(appEvents);
+  await initEvents(Container.get<AppEvents>(AppEvents));
 
 })();
 
-async function loadModules(appEvents: AppEvents, modules: AppModuleChild[]) {
+async function loadModules(modules: AppModuleChild[]) {
 
   let successCounter = 0;
 
   for (const module of modules) {
 
     try {
-      await loadModule(module, appEvents);
+      await loadModule(module);
       successCounter++;
       console.log(`Module ${(module as any).MODULE_NAME}: OK`);
     } catch (e) {
@@ -41,10 +30,15 @@ async function loadModules(appEvents: AppEvents, modules: AppModuleChild[]) {
   console.log(`--- Loaded ${successCounter}/${modules.length} modules ---`);
 }
 
-async function loadModule(module: AppModuleChild, appEvents: AppEvents) {
-  return new module(appEvents).init();
+async function loadModule(module: AppModuleChild) {
+  const instance = Container.get(module);
+  if (!instance.isTurnedOn()) {
+    console.log(`Module ${(module as any).MODULE_NAME} is turned off`);
+    return;
+  }
+  return instance.init();
 }
 
 async function initEvents(appEvents: AppEvents) {
-  appEvents.onItemsLoaded.next({isInitial: true});
+  appEvents.onItemsLoaded.next({isInitial: true, data: getEntries()});
 }

@@ -1,7 +1,7 @@
-export abstract class AppModule {
+import { Service } from 'typedi';
 
-  constructor(public moduleName?: string) {
-  }
+@Service()
+export abstract class AppModule {
 
   async init() {
 

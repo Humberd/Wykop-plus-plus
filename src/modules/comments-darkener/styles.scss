@@ -1,0 +1,20 @@
+.already-seen {
+	filter: brightness(75%);
+	background: inherit;
+
+	transition: filter 100ms;
+
+	&:hover {
+		filter: brightness(95%);
+	}
+}
+
+.iC {
+	ul.sub {
+		background: inherit;
+
+		&>li {
+			background: inherit;
+		}
+	}
+}

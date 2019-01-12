@@ -1,33 +1,30 @@
-import { AppStorage } from '../../app-storage';
-import { CommentsState } from './comments-state';
-import { isElementInViewport, lazyLoadImages, scrollTo, scrollToTop } from '../../utils';
-import { getEntries } from '../../queries';
+import { AppStorage } from '../../utils/app-storage';
+import { CommentsHiderModuleState } from './module-state';
+import { isElementInViewport, lazyLoadImages, scrollTo, scrollToTop } from '../../utils/utils';
+import { getEntries } from '../../utils/queries';
 import { AppModule } from '../app-module';
-import { AppEvents, OnItemsLoadedPayload } from '../../events';
+import { AppEvents, OnItemsLoadedPayload } from '../../services/events';
 import './styles.scss';
+import { StatePersistor } from '../../utils/state-persistor';
+import { getCommentId } from '../../utils/extractors';
+import { Service } from 'typedi';
+import { AppState } from '../../services/app-state';
 
+@Service()
 export class CommentsHiderModule extends AppModule {
 
   static readonly MODULE_NAME = 'CommentsHiderModule';
 
-  private static readonly STORAGE_KEY = 'comments-state';
-  private static readonly ELEMENT_CLASS = 'x-comment-hider';
+  private readonly statePersistor = new StatePersistor<CommentsHiderModuleState>(new AppStorage(CommentsHiderModule.MODULE_NAME));
 
-  private statePersistor: CommentsState;
-  private articleId: string;
-
-  constructor(private appEvents: AppEvents) {
+  constructor(private appEvents: AppEvents,
+              private appState: AppState) {
     super();
-
-    const storage = new AppStorage(CommentsHiderModule.STORAGE_KEY);
-    this.statePersistor = new CommentsState(storage);
-
-    this.articleId = this.getArticleId();
 
   }
 
   async init() {
-    await this.statePersistor.initState();
+    await this.statePersistor.initState({commentHidePersistor: {}});
 
     this.listenForEvents();
   }
@@ -36,40 +33,30 @@ export class CommentsHiderModule extends AppModule {
   private listenForEvents() {
     this.appEvents.onItemsLoaded
         .asObservable()
-        .subscribe((payload: OnItemsLoadedPayload) => this.addCommentButtons(payload.isInitial));
+        .subscribe(payload => this.addCommentButtons(payload.data));
   }
 
-  private addCommentButtons(isInitial: boolean) {
-
-    const entries = getEntries();
+  private addCommentButtons(entries: NodeListOf<Element>) {
 
     let appliedCounter = 0;
-    let firstShownComment: Element;
 
     for (const commentBlock of entries) {
-      if (commentBlock.querySelector(`.${CommentsHiderModule.ELEMENT_CLASS}`)) {
-        continue;
-      }
 
       const aElem = this.createHideButton(commentBlock);
 
-      // @ts-ignore
-      const commentId = commentBlock.querySelector('.dC').dataset.id;
+      const commentId = getCommentId(commentBlock);
 
-      if (this.isCommentHidden(this.articleId, commentId)) {
-        this.hideComments(aElem, commentBlock, this.articleId, commentId);
+      if (this.isCommentHidden(this.appState.articleId, commentId)) {
+        this.hideComments(aElem, commentBlock, this.appState.articleId, commentId);
       } else {
-        this.showComments(aElem, commentBlock, this.articleId, commentId);
-        if (!firstShownComment) {
-          firstShownComment = commentBlock;
-        }
+        this.showComments(aElem, commentBlock, this.appState.articleId, commentId);
       }
 
       aElem.addEventListener('click', () => {
-        if (this.isCommentHidden(this.articleId, commentId)) {
-          this.showComments(aElem, commentBlock, this.articleId, commentId);
+        if (this.isCommentHidden(this.appState.articleId, commentId)) {
+          this.showComments(aElem, commentBlock, this.appState.articleId, commentId);
         } else {
-          this.hideComments(aElem, commentBlock, this.articleId, commentId);
+          this.hideComments(aElem, commentBlock, this.appState.articleId, commentId);
           this.appEvents.onCommentHid.next();
           if (!isElementInViewport(commentBlock)) {
             scrollTo(commentBlock);
@@ -85,30 +72,12 @@ export class CommentsHiderModule extends AppModule {
 
     lazyLoadImages();
 
-    /* We want to scroll only on the initial page load, because it would
-     * make user angry, that we are scrilling to the bottom when user is still at the top
-
-     * Need to use setTimeouts, because it won't scroll immediately */
-    if (isInitial) {
-      setTimeout(() => {
-        scrollToTop();
-      }, 500);
-    }
-  }
-
-  private getArticleId() {
-    if (!location.pathname.startsWith('/link')) {
-      return 'mikroblog';
-    }
-
-    return location.pathname.split('/')[2];
   }
 
   private createHideButton(parent: Element): Element {
     const a = document.createElement('a');
     a.setAttribute('href', 'javascript:void(0)');
     a.classList.add('comment-expand');
-    a.classList.add(CommentsHiderModule.ELEMENT_CLASS);
 
     parent.prepend(a);
 

@@ -19,4 +19,8 @@ export class AppStorage {
 
   }
 
+  clearAll() {
+    this.storage.clear();
+  }
+
 }
