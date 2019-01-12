@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
 
-@injectable()
+@Service()
 export class AppEvents {
 
   readonly onItemsLoaded = new Subject<OnItemsLoadedPayload>();

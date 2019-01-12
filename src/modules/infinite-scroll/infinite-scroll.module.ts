@@ -4,9 +4,9 @@ import { PageController, PageInfo } from './page-controller';
 import { AppModule } from '../app-module';
 import { AppEvents } from '../../events';
 import './styles.scss';
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
 
-@injectable()
+@Service()
 export class InfiniteScrollModule extends AppModule {
 
   static readonly MODULE_NAME = 'InfiniteScrollModule';

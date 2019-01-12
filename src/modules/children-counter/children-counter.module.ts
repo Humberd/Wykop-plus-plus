@@ -2,9 +2,9 @@ import { getEntries } from '../../utils/queries';
 import { AppModule } from '../app-module';
 import './styles.scss';
 import { AppEvents } from '../../events';
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
 
-@injectable()
+@Service()
 export class ChildrenCounterModule extends AppModule {
 
   static readonly MODULE_NAME = 'ChildrenCounterModule';

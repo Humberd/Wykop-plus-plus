@@ -1,32 +1,23 @@
 import 'reflect-metadata';
 import { AppEvents } from './events';
-import { Container } from 'inversify';
-import { AppModuleChild, MODUELS, SERVICES, ServiceType } from './modules';
+import { AppModuleChild, MODUELS } from './modules';
+import { Container } from 'typedi';
 
 (async function () {
-  const container = new Container();
-  loadServices(container, SERVICES);
+  await loadModules(MODUELS);
 
-  await loadModules(container, MODUELS);
-
-  await initEvents(container.get<AppEvents>(AppEvents));
+  await initEvents(Container.get<AppEvents>(AppEvents));
 
 })();
 
-function loadServices(container: Container, services: ServiceType[]) {
-  for (const service of services) {
-    container.bind(service).toSelf().inSingletonScope();
-  }
-}
-
-async function loadModules(container: Container, modules: AppModuleChild[]) {
+async function loadModules(modules: AppModuleChild[]) {
 
   let successCounter = 0;
 
   for (const module of modules) {
 
     try {
-      await loadModule(container, module);
+      await loadModule(module);
       successCounter++;
       console.log(`Module ${(module as any).MODULE_NAME}: OK`);
     } catch (e) {
@@ -38,8 +29,8 @@ async function loadModules(container: Container, modules: AppModuleChild[]) {
   console.log(`--- Loaded ${successCounter}/${modules.length} modules ---`);
 }
 
-async function loadModule(container: Container, module: AppModuleChild) {
-  return container.resolve(module).init();
+async function loadModule(module: AppModuleChild) {
+  return Container.get(module).init();
 }
 
 async function initEvents(appEvents: AppEvents) {

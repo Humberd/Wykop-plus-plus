@@ -7,9 +7,9 @@ import { AppEvents, OnItemsLoadedPayload } from '../../events';
 import './styles.scss';
 import { StatePersistor } from '../../utils/state-persistor';
 import { getCommentId } from '../../utils/extractors';
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
 
-@injectable()
+@Service()
 export class CommentsHiderModule extends AppModule {
 
   static readonly MODULE_NAME = 'CommentsHiderModule';

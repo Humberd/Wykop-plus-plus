@@ -5,9 +5,9 @@ import { StatePersistor } from '../../utils/state-persistor';
 import { AppStorage } from '../../utils/app-storage';
 import { CommentsDarkenerModuleState } from './module-state';
 import { getCommentDate } from '../../utils/extractors';
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
 
-@injectable()
+@Service()
 export class CommentsDarkenerModule extends AppModule {
   static readonly MODULE_NAME = 'CommentsDarkenerModule';
 

@@ -1,6 +1,6 @@
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
 
-@injectable()
+@Service()
 export abstract class AppModule {
 
   async init() {
