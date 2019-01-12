@@ -5,7 +5,9 @@ import { StatePersistor } from '../../utils/state-persistor';
 import { AppStorage } from '../../utils/app-storage';
 import { CommentsDarkenerModuleState } from './module-state';
 import { getCommentDate } from '../../utils/extractors';
+import { injectable } from 'inversify';
 
+@injectable()
 export class CommentsDarkenerModule extends AppModule {
   static readonly MODULE_NAME = 'CommentsDarkenerModule';
 

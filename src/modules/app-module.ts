@@ -1,7 +1,7 @@
-export abstract class AppModule {
+import { injectable } from 'inversify';
 
-  constructor() {
-  }
+@injectable()
+export abstract class AppModule {
 
   async init() {
 

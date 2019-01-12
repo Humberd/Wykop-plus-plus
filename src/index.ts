@@ -1,38 +1,32 @@
 import 'reflect-metadata';
-import { AppModule } from './modules/app-module';
-import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
 import { AppEvents } from './events';
-import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
-import { FooterRemoverModule } from './modules/footer-remover/footer-remover.module';
-import { InfiniteScrollModule } from './modules/infinite-scroll/infinite-scroll.module';
-import { CommentsDarkenerModule } from './modules/comments-darkener/comments-darkener-module';
-
-type AppModuleChild = new (appEvents: AppEvents) => AppModule;
-
+import { Container } from 'inversify';
+import { AppModuleChild, MODUELS, SERVICES, ServiceType } from './modules';
 
 (async function () {
-  const appEvents = new AppEvents();
+  const container = new Container();
+  loadServices(container, SERVICES);
 
-  await loadModules(appEvents, [
-    CommentsHiderModule,
-    ChildrenCounterModule,
-    FooterRemoverModule,
-    InfiniteScrollModule,
-    CommentsDarkenerModule
-  ]);
+  await loadModules(container, MODUELS);
 
-  await initEvents(appEvents);
+  await initEvents(container.get<AppEvents>(AppEvents));
 
 })();
 
-async function loadModules(appEvents: AppEvents, modules: AppModuleChild[]) {
+function loadServices(container: Container, services: ServiceType[]) {
+  for (const service of services) {
+    container.bind(service).toSelf().inSingletonScope();
+  }
+}
+
+async function loadModules(container: Container, modules: AppModuleChild[]) {
 
   let successCounter = 0;
 
   for (const module of modules) {
 
     try {
-      await loadModule(module, appEvents);
+      await loadModule(container, module);
       successCounter++;
       console.log(`Module ${(module as any).MODULE_NAME}: OK`);
     } catch (e) {
@@ -44,8 +38,8 @@ async function loadModules(appEvents: AppEvents, modules: AppModuleChild[]) {
   console.log(`--- Loaded ${successCounter}/${modules.length} modules ---`);
 }
 
-async function loadModule(module: AppModuleChild, appEvents: AppEvents) {
-  return new module(appEvents).init();
+async function loadModule(container: Container, module: AppModuleChild) {
+  return container.resolve(module).init();
 }
 
 async function initEvents(appEvents: AppEvents) {

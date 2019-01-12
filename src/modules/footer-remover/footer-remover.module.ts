@@ -1,15 +1,12 @@
 import { getFooter, getSite } from '../../utils/queries';
 import { AppModule } from '../app-module';
-import { AppEvents } from '../../events';
 import './styles.scss';
+import { injectable } from 'inversify';
 
+@injectable()
 export class FooterRemoverModule extends AppModule {
 
   static readonly MODULE_NAME = 'FooterRemoverModule';
-
-  constructor(private appEvents: AppEvents) {
-    super();
-  }
 
   async init() {
     this.removeFooter();

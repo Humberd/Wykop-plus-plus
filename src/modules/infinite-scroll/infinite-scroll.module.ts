@@ -4,7 +4,9 @@ import { PageController, PageInfo } from './page-controller';
 import { AppModule } from '../app-module';
 import { AppEvents } from '../../events';
 import './styles.scss';
+import { injectable } from 'inversify';
 
+@injectable()
 export class InfiniteScrollModule extends AppModule {
 
   static readonly MODULE_NAME = 'InfiniteScrollModule';
