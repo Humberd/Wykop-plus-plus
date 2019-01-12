@@ -30,7 +30,12 @@ async function loadModules(modules: AppModuleChild[]) {
 }
 
 async function loadModule(module: AppModuleChild) {
-  return Container.get(module).init();
+  const instance = Container.get(module);
+  if (!instance.isTurnedOn()) {
+    console.log(`Module ${(module as any).MODULE_NAME} is turned off`);
+    return;
+  }
+  return instance.init();
 }
 
 async function initEvents(appEvents: AppEvents) {
