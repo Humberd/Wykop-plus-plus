@@ -4,8 +4,8 @@ import { AppStorage } from '../../utils/app-storage';
 import { CommentsDarkenerModuleState } from './module-state';
 import { Service } from 'typedi';
 import { AppState } from '../../services/app-state';
-import { getAllComments } from '../../utils/queries';
 import './styles.scss';
+import { AppEvents } from '../../services/events';
 
 @Service()
 export class CommentsDarkenerModule extends AppModule {
@@ -13,7 +13,8 @@ export class CommentsDarkenerModule extends AppModule {
 
   private readonly statePersistor = new StatePersistor<CommentsDarkenerModuleState>(new AppStorage(CommentsDarkenerModule.MODULE_NAME));
 
-  constructor(private appState: AppState) {
+  constructor(private appState: AppState,
+              private appEvents: AppEvents) {
     super();
   }
 
@@ -22,20 +23,7 @@ export class CommentsDarkenerModule extends AppModule {
 
     this.prepareState();
 
-    for (const comment of getAllComments()) {
-      // @ts-ignore
-      const commentId = comment.dataset.id;
-      if (this.statePersistor.state[this.appState.articleId].visitedComments[commentId]) {
-        comment.classList.add('already-seen');
-        continue;
-      }
-
-      this.statePersistor.state[this.appState.articleId].visitedComments[commentId] = true;
-
-    }
-
-    this.statePersistor.save();
-
+    this.listenToEvents();
   }
 
   private prepareState() {
@@ -48,5 +36,45 @@ export class CommentsDarkenerModule extends AppModule {
       this.statePersistor.state[this.appState.articleId].lastVisit = new Date().getTime();
     }
   }
+
+  private listenToEvents() {
+    this.appEvents.onItemsLoaded
+        .asObservable()
+        .subscribe(payload => {
+          const allComments = this.extractAllComments(payload.data);
+          this.darkenComments(allComments);
+        });
+  }
+
+  private extractAllComments(rootComments: NodeListOf<Element>): Element[] {
+    return Array.from(rootComments)
+        .reduce((arr, elem) => {
+          arr.push(...elem.querySelectorAll('.wblock.dC'));
+          return arr;
+        }, [] as Element[]);
+  }
+
+  private darkenComments(comments: Element[]) {
+
+    let appliedCounter = 0;
+
+    for (const comment of comments) {
+      // @ts-ignore
+      const commentId = comment.dataset.id;
+      if (!this.statePersistor.state[this.appState.articleId].visitedComments[commentId]) {
+        this.statePersistor.state[this.appState.articleId].visitedComments[commentId] = true;
+        continue;
+      }
+
+      comment.classList.add('already-seen');
+
+      appliedCounter++;
+    }
+
+    console.log(`Darkened ${appliedCounter}/${comments.length} comments`);
+
+    this.statePersistor.save();
+  }
+
 
 }

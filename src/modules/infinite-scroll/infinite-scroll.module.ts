@@ -52,10 +52,10 @@ export class InfiniteScrollModule extends AppModule {
       if (!this.pageController.page.isLoading && isElementInViewport(elemTriggeringNextPage)) {
         const previousPageLastItem = this.getLastItem();
 
-        await this.pageController.loadNextPage();
+        const nextPageItems = await this.pageController.loadNextPage();
 
         this.addPageBar(previousPageLastItem, this.pageController.page.currentPage);
-        this.appEvents.onItemsLoaded.next({isInitial: false});
+        this.appEvents.onItemsLoaded.next({isInitial: false, data: nextPageItems});
 
         if (this.pageController.page.isLast) {
           console.log(`Page ${this.pageController.page.currentPage} is the last one. Infinite scroll is disabled`);

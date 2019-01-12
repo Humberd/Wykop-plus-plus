@@ -3,10 +3,6 @@ export function getEntries(doc = document) {
   return doc.querySelectorAll('#itemsStream > .iC:not(.link)');
 }
 
-export function getAllComments(doc = document) {
-  return doc.querySelectorAll('#itemsStream .wblock.dC');
-}
-
 /* Entries + links */
 export function getAllItems(doc = document) {
   return doc.querySelectorAll('#itemsStream > .iC');

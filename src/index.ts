@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { AppEvents } from './services/events';
 import { AppModuleChild, MODUELS } from './modules';
 import { Container } from 'typedi';
+import { getEntries } from './utils/queries';
 
 (async function () {
   await loadModules(MODUELS);
@@ -39,5 +40,5 @@ async function loadModule(module: AppModuleChild) {
 }
 
 async function initEvents(appEvents: AppEvents) {
-  appEvents.onItemsLoaded.next({isInitial: true});
+  appEvents.onItemsLoaded.next({isInitial: true, data: getEntries()});
 }

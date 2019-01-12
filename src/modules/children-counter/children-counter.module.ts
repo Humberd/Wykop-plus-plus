@@ -1,4 +1,3 @@
-import { getEntries } from '../../utils/queries';
 import { AppModule } from '../app-module';
 import './styles.scss';
 import { AppEvents } from '../../services/events';
@@ -8,8 +7,6 @@ import { Service } from 'typedi';
 export class ChildrenCounterModule extends AppModule {
 
   static readonly MODULE_NAME = 'ChildrenCounterModule';
-
-  private static readonly ELEMENT_CLASS = 'x-children-counter';
 
   constructor(private appEvents: AppEvents) {
     super();
@@ -22,19 +19,14 @@ export class ChildrenCounterModule extends AppModule {
   private listenForEvents() {
     this.appEvents.onItemsLoaded
         .asObservable()
-        .subscribe(() => this.addChildrenCounters());
+        .subscribe(payload => this.addChildrenCounters(payload.data));
   }
 
-  private addChildrenCounters() {
-    const entries = getEntries();
+  private addChildrenCounters(entries: NodeListOf<Element>) {
 
     let appliedCounter = 0;
 
     for (const entry of entries) {
-
-      if (entry.querySelector(`.${ChildrenCounterModule.ELEMENT_CLASS}`)) {
-        continue;
-      }
 
       this.createChildrenCounter(entry);
 
@@ -49,7 +41,6 @@ export class ChildrenCounterModule extends AppModule {
   createChildrenCounter(elem: Element): Element {
     const span = document.createElement('span');
     span.classList.add('child-counter');
-    span.classList.add(ChildrenCounterModule.ELEMENT_CLASS);
 
     const moreElem = elem.querySelector('.sub .more a');
 

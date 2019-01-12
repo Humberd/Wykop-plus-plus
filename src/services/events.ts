@@ -9,4 +9,5 @@ export class AppEvents {
 
 export interface OnItemsLoadedPayload {
   isInitial: boolean;
+  data?: NodeListOf<Element>;
 }

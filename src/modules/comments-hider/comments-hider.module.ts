@@ -15,8 +15,6 @@ export class CommentsHiderModule extends AppModule {
 
   static readonly MODULE_NAME = 'CommentsHiderModule';
 
-  private static readonly ELEMENT_CLASS = 'x-comment-hider';
-
   private readonly statePersistor = new StatePersistor<CommentsHiderModuleState>(new AppStorage(CommentsHiderModule.MODULE_NAME));
 
   constructor(private appEvents: AppEvents,
@@ -35,20 +33,14 @@ export class CommentsHiderModule extends AppModule {
   private listenForEvents() {
     this.appEvents.onItemsLoaded
         .asObservable()
-        .subscribe((payload: OnItemsLoadedPayload) => this.addCommentButtons(payload.isInitial));
+        .subscribe(payload => this.addCommentButtons(payload.data));
   }
 
-  private addCommentButtons(isInitial: boolean) {
-
-    const entries = getEntries();
+  private addCommentButtons(entries: NodeListOf<Element>) {
 
     let appliedCounter = 0;
-    let firstShownComment: Element;
 
     for (const commentBlock of entries) {
-      if (commentBlock.querySelector(`.${CommentsHiderModule.ELEMENT_CLASS}`)) {
-        continue;
-      }
 
       const aElem = this.createHideButton(commentBlock);
 
@@ -58,9 +50,6 @@ export class CommentsHiderModule extends AppModule {
         this.hideComments(aElem, commentBlock, this.appState.articleId, commentId);
       } else {
         this.showComments(aElem, commentBlock, this.appState.articleId, commentId);
-        if (!firstShownComment) {
-          firstShownComment = commentBlock;
-        }
       }
 
       aElem.addEventListener('click', () => {
@@ -83,22 +72,12 @@ export class CommentsHiderModule extends AppModule {
 
     lazyLoadImages();
 
-    /* We want to scroll only on the initial page load, because it would
-     * make user angry, that we are scrilling to the bottom when user is still at the top
-
-     * Need to use setTimeouts, because it won't scroll immediately */
-    // if (isInitial) {
-    //   setTimeout(() => {
-    //     scrollToTop();
-    //   }, 500);
-    // }
   }
 
   private createHideButton(parent: Element): Element {
     const a = document.createElement('a');
     a.setAttribute('href', 'javascript:void(0)');
     a.classList.add('comment-expand');
-    a.classList.add(CommentsHiderModule.ELEMENT_CLASS);
 
     parent.prepend(a);
 
