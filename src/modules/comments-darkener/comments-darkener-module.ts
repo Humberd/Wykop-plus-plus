@@ -14,7 +14,7 @@ export class CommentsDarkenerModule extends AppModule {
 
   private readonly statePersistor = new StatePersistor<CommentsDarkenerModuleState>(new AppStorage(CommentsDarkenerModule.MODULE_NAME));
 
-  lastVisit: number;
+  private lastVisit: number;
 
   constructor(private appState: AppState) {
     super();
