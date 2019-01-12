@@ -1,4 +1,20 @@
 .already-seen {
 	filter: brightness(75%);
-	margin-bottom: 0 !important;
+	background: inherit;
+
+	transition: filter 100ms;
+
+	&:hover {
+		filter: unset;
+	}
+}
+
+.iC {
+	ul.sub {
+		background: inherit;
+
+		&>li {
+			background: inherit;
+		}
+	}
 }

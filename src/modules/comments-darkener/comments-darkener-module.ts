@@ -4,8 +4,7 @@ import { AppStorage } from '../../utils/app-storage';
 import { CommentsDarkenerModuleState } from './module-state';
 import { Service } from 'typedi';
 import { AppState } from '../../services/app-state';
-import { getEntries } from '../../utils/queries';
-import { getCommentDate } from '../../utils/extractors';
+import { getAllComments } from '../../utils/queries';
 import './styles.scss';
 
 @Service()
@@ -14,8 +13,6 @@ export class CommentsDarkenerModule extends AppModule {
 
   private readonly statePersistor = new StatePersistor<CommentsDarkenerModuleState>(new AppStorage(CommentsDarkenerModule.MODULE_NAME));
 
-  private lastVisit: number;
-
   constructor(private appState: AppState) {
     super();
   }
@@ -23,24 +20,32 @@ export class CommentsDarkenerModule extends AppModule {
   async init() {
     await this.statePersistor.initState();
 
+    this.prepareState();
+
+    for (const comment of getAllComments()) {
+      // @ts-ignore
+      const commentId = comment.dataset.id;
+      if (this.statePersistor.state[this.appState.articleId].visitedComments[commentId]) {
+        comment.classList.add('already-seen');
+        continue;
+      }
+
+      this.statePersistor.state[this.appState.articleId].visitedComments[commentId] = true;
+
+    }
+
+    this.statePersistor.save();
+
+  }
+
+  private prepareState() {
     if (!this.statePersistor.state[this.appState.articleId]) {
-      this.lastVisit = 0;
       this.statePersistor.state[this.appState.articleId] = {
         lastVisit: new Date().getTime(),
         visitedComments: {}
       };
     } else {
-      this.lastVisit = this.statePersistor.state[this.appState.articleId].lastVisit;
       this.statePersistor.state[this.appState.articleId].lastVisit = new Date().getTime();
-    }
-
-    this.statePersistor.save();
-
-    for (const entry of getEntries()) {
-      const commentTime = getCommentDate(entry).getTime();
-      if (commentTime < this.lastVisit) {
-        entry.classList.add('already-seen');
-      }
     }
   }
 

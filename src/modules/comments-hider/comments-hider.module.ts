@@ -87,11 +87,11 @@ export class CommentsHiderModule extends AppModule {
      * make user angry, that we are scrilling to the bottom when user is still at the top
 
      * Need to use setTimeouts, because it won't scroll immediately */
-    if (isInitial) {
-      setTimeout(() => {
-        scrollToTop();
-      }, 500);
-    }
+    // if (isInitial) {
+    //   setTimeout(() => {
+    //     scrollToTop();
+    //   }, 500);
+    // }
   }
 
   private createHideButton(parent: Element): Element {
