@@ -2,7 +2,7 @@ import { getAllItems, getAllItemsParent, getPager } from '../../utils/queries';
 import { isElementInViewport } from '../../utils/utils';
 import { PageController, PageInfo } from './page-controller';
 import { AppModule } from '../app-module';
-import { AppEvents } from '../../events';
+import { AppEvents } from '../../services/events';
 import './styles.scss';
 import { Service } from 'typedi';
 

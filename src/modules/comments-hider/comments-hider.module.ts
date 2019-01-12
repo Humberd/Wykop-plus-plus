@@ -3,11 +3,12 @@ import { CommentsHiderModuleState } from './module-state';
 import { isElementInViewport, lazyLoadImages, scrollTo, scrollToTop } from '../../utils/utils';
 import { getEntries } from '../../utils/queries';
 import { AppModule } from '../app-module';
-import { AppEvents, OnItemsLoadedPayload } from '../../events';
+import { AppEvents, OnItemsLoadedPayload } from '../../services/events';
 import './styles.scss';
 import { StatePersistor } from '../../utils/state-persistor';
 import { getCommentId } from '../../utils/extractors';
 import { Service } from 'typedi';
+import { AppState } from '../../services/app-state';
 
 @Service()
 export class CommentsHiderModule extends AppModule {
@@ -18,12 +19,9 @@ export class CommentsHiderModule extends AppModule {
 
   private readonly statePersistor = new StatePersistor<CommentsHiderModuleState>(new AppStorage(CommentsHiderModule.MODULE_NAME));
 
-  private articleId: string;
-
-  constructor(private appEvents: AppEvents) {
+  constructor(private appEvents: AppEvents,
+              private appState: AppState) {
     super();
-
-    this.articleId = this.getArticleId();
 
   }
 
@@ -56,20 +54,20 @@ export class CommentsHiderModule extends AppModule {
 
       const commentId = getCommentId(commentBlock);
 
-      if (this.isCommentHidden(this.articleId, commentId)) {
-        this.hideComments(aElem, commentBlock, this.articleId, commentId);
+      if (this.isCommentHidden(this.appState.articleId, commentId)) {
+        this.hideComments(aElem, commentBlock, this.appState.articleId, commentId);
       } else {
-        this.showComments(aElem, commentBlock, this.articleId, commentId);
+        this.showComments(aElem, commentBlock, this.appState.articleId, commentId);
         if (!firstShownComment) {
           firstShownComment = commentBlock;
         }
       }
 
       aElem.addEventListener('click', () => {
-        if (this.isCommentHidden(this.articleId, commentId)) {
-          this.showComments(aElem, commentBlock, this.articleId, commentId);
+        if (this.isCommentHidden(this.appState.articleId, commentId)) {
+          this.showComments(aElem, commentBlock, this.appState.articleId, commentId);
         } else {
-          this.hideComments(aElem, commentBlock, this.articleId, commentId);
+          this.hideComments(aElem, commentBlock, this.appState.articleId, commentId);
           this.appEvents.onCommentHid.next();
           if (!isElementInViewport(commentBlock)) {
             scrollTo(commentBlock);
@@ -94,14 +92,6 @@ export class CommentsHiderModule extends AppModule {
         scrollToTop();
       }, 500);
     }
-  }
-
-  private getArticleId() {
-    if (!location.pathname.startsWith('/link')) {
-      return 'mikroblog';
-    }
-
-    return location.pathname.split('/')[2];
   }
 
   private createHideButton(parent: Element): Element {

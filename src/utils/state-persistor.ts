@@ -13,4 +13,8 @@ export class StatePersistor<T> {
   save() {
     this.storage.saveAll(this.state);
   }
+
+  clear() {
+    this.storage.clearAll();
+  }
 }

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AppEvents } from './events';
+import { AppEvents } from './services/events';
 import { AppModuleChild, MODUELS } from './modules';
 import { Container } from 'typedi';
 

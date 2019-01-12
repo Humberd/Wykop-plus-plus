@@ -9,3 +9,11 @@ export function getCommentId(comment: Element): string {
   // @ts-ignore
   return dataElement.dataset.id;
 }
+
+export function getArticleId(): string {
+  if (!location.pathname.startsWith('/link')) {
+    return 'mikroblog';
+  }
+
+  return location.pathname.split('/')[2];
+}
