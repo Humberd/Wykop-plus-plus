@@ -1,33 +1,32 @@
-import { AppStorage } from '../../app-storage';
-import { CommentsState } from './comments-state';
-import { isElementInViewport, lazyLoadImages, scrollTo, scrollToTop } from '../../utils';
-import { getEntries } from '../../queries';
+import { AppStorage } from '../../utils/app-storage';
+import { CommentsHiderModuleState } from './module-state';
+import { isElementInViewport, lazyLoadImages, scrollTo, scrollToTop } from '../../utils/utils';
+import { getEntries } from '../../utils/queries';
 import { AppModule } from '../app-module';
 import { AppEvents, OnItemsLoadedPayload } from '../../events';
 import './styles.scss';
+import { StatePersistor } from '../../utils/state-persistor';
+import { getCommentId } from '../../utils/extractors';
 
 export class CommentsHiderModule extends AppModule {
 
   static readonly MODULE_NAME = 'CommentsHiderModule';
 
-  private static readonly STORAGE_KEY = 'comments-state';
   private static readonly ELEMENT_CLASS = 'x-comment-hider';
 
-  private statePersistor: CommentsState;
+  private readonly statePersistor = new StatePersistor<CommentsHiderModuleState>(new AppStorage(CommentsHiderModule.MODULE_NAME));
+
   private articleId: string;
 
   constructor(private appEvents: AppEvents) {
     super();
-
-    const storage = new AppStorage(CommentsHiderModule.STORAGE_KEY);
-    this.statePersistor = new CommentsState(storage);
 
     this.articleId = this.getArticleId();
 
   }
 
   async init() {
-    await this.statePersistor.initState();
+    await this.statePersistor.initState({commentHidePersistor: {}});
 
     this.listenForEvents();
   }
@@ -53,8 +52,7 @@ export class CommentsHiderModule extends AppModule {
 
       const aElem = this.createHideButton(commentBlock);
 
-      // @ts-ignore
-      const commentId = commentBlock.querySelector('.dC').dataset.id;
+      const commentId = getCommentId(commentBlock);
 
       if (this.isCommentHidden(this.articleId, commentId)) {
         this.hideComments(aElem, commentBlock, this.articleId, commentId);

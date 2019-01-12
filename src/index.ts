@@ -1,9 +1,11 @@
+import 'reflect-metadata';
 import { AppModule } from './modules/app-module';
 import { CommentsHiderModule } from './modules/comments-hider/comments-hider.module';
 import { AppEvents } from './events';
 import { ChildrenCounterModule } from './modules/children-counter/children-counter.module';
 import { FooterRemoverModule } from './modules/footer-remover/footer-remover.module';
 import { InfiniteScrollModule } from './modules/infinite-scroll/infinite-scroll.module';
+import { CommentsDarkenerModule } from './modules/comments-darkener/comments-darkener-module';
 
 type AppModuleChild = new (appEvents: AppEvents) => AppModule;
 
@@ -15,7 +17,8 @@ type AppModuleChild = new (appEvents: AppEvents) => AppModule;
     CommentsHiderModule,
     ChildrenCounterModule,
     FooterRemoverModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    CommentsDarkenerModule
   ]);
 
   await initEvents(appEvents);

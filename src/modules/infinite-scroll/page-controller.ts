@@ -1,5 +1,5 @@
-import { getAllItems, getAllItemsParent, getPager } from '../../queries';
-import { lazyLoadImages } from '../../utils';
+import { getAllItems, getAllItemsParent, getPager } from '../../utils/queries';
+import { lazyLoadImages } from '../../utils/utils';
 
 export interface Page {
   isLast: boolean;

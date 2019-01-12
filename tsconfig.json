@@ -7,6 +7,9 @@
     "module": "es6",
     "target": "es2017",
     "moduleResolution": "node",
+    "types": ["reflect-metadata", "chrome"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "typeRoots": [
       "./node_modules/@types"
     ],

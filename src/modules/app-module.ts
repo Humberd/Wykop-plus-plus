@@ -1,6 +1,6 @@
 export abstract class AppModule {
 
-  constructor(public moduleName?: string) {
+  constructor() {
   }
 
   async init() {

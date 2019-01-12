@@ -1,4 +1,4 @@
-import { getEntries } from '../../queries';
+import { getEntries } from '../../utils/queries';
 import { AppModule } from '../app-module';
 import './styles.scss';
 import { AppEvents } from '../../events';

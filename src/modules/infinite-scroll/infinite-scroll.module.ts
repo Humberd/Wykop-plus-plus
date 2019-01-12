@@ -1,5 +1,5 @@
-import { getAllItems, getAllItemsParent, getPager } from '../../queries';
-import { isElementInViewport } from '../../utils';
+import { getAllItems, getAllItemsParent, getPager } from '../../utils/queries';
+import { isElementInViewport } from '../../utils/utils';
 import { PageController, PageInfo } from './page-controller';
 import { AppModule } from '../app-module';
 import { AppEvents } from '../../events';

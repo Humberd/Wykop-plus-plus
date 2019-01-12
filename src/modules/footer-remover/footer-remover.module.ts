@@ -1,4 +1,4 @@
-import { getFooter, getSite } from '../../queries';
+import { getFooter, getSite } from '../../utils/queries';
 import { AppModule } from '../app-module';
 import { AppEvents } from '../../events';
 import './styles.scss';
