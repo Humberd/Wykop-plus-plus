@@ -1,7 +1,7 @@
 const Path = require('path');
 const Webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const argv = require('yargs').argv;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -24,27 +24,28 @@ module.exports = {
   bail: true,
   target: 'web',
   plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: Path.resolve(__dirname, '../public'),
-        to: '.',
-        transform(content, path) {
-          if (path.endsWith('manifest.json')) {
-            const json = JSON.parse(content.toString('utf8'));
-            json.version = require('../package').version;
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: Path.resolve(__dirname, '../public'),
+          to: '.',
+          transform(content, path) {
+            if (path.endsWith('manifest.json')) {
+              const json = JSON.parse(content.toString('utf8'));
+              json.version = require('../package').version;
 
-            return Buffer.from(JSON.stringify(json, null, 2));
-          }
-          return content;
+              return Buffer.from(JSON.stringify(json, null, 2));
+            }
+            return content;
+          },
         },
-      },
-    ]),
+      ]
+    }),
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
     }),
     new Webpack.optimize.ModuleConcatenationPlugin(),
-    new CleanWebpackPlugin([Path.join(__dirname, buildDirectory)],
-        {root: Path.resolve(__dirname, '..')}),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'options.html',
       template: 'src/options/options.html',
