@@ -7,7 +7,6 @@ import { InfiniteScrollModule } from './modules/infinite-scroll/infinite-scroll.
 
 type AppModuleChild = new (appEvents: AppEvents) => AppModule;
 
-
 (async function () {
   const appEvents = new AppEvents();
 
@@ -19,7 +18,6 @@ type AppModuleChild = new (appEvents: AppEvents) => AppModule;
   ]);
 
   await initEvents(appEvents);
-
 })();
 
 async function loadModules(appEvents: AppEvents, modules: AppModuleChild[]) {
