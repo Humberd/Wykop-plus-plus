@@ -5,6 +5,7 @@ import { getEntries } from '../../queries';
 import { AppModule } from '../app-module';
 import { AppEvents, OnItemsLoadedPayload } from '../../events';
 import './styles.scss';
+import { InMemoryCommentsCache } from './in-memory-comments-cache';
 
 export class CommentsHiderModule extends AppModule {
 
@@ -14,6 +15,7 @@ export class CommentsHiderModule extends AppModule {
   private static readonly ELEMENT_CLASS = 'x-comment-hider';
 
   private statePersistor: CommentsState;
+  private inMemoryCache: InMemoryCommentsCache;
   private articleId: string;
 
   constructor(private appEvents: AppEvents) {
@@ -21,6 +23,7 @@ export class CommentsHiderModule extends AppModule {
 
     const storage = new AppStorage(CommentsHiderModule.STORAGE_KEY);
     this.statePersistor = new CommentsState(storage);
+    this.inMemoryCache = new InMemoryCommentsCache();
 
     this.articleId = this.getArticleId();
 
@@ -40,7 +43,6 @@ export class CommentsHiderModule extends AppModule {
   }
 
   private addCommentButtons(isInitial: boolean) {
-
     const entries = getEntries();
 
     let appliedCounter = 0;
@@ -123,6 +125,12 @@ export class CommentsHiderModule extends AppModule {
     this.statePersistor.state.commentHidePersistor[articleId].lastUpdate = new Date().getTime();
     this.statePersistor.state.commentHidePersistor[articleId].collapsedThings[commentId] = true;
     this.statePersistor.save();
+
+    this.inMemoryCache.setCache(commentId, {
+      comments: parent.querySelector(':scope > ul.sub'),
+    });
+
+    this.inMemoryCache.getCached(commentId).comments.remove();
   }
 
   private showComments(aElem: Element, parent: Element, articleId: string, commentId: string) {
@@ -133,6 +141,13 @@ export class CommentsHiderModule extends AppModule {
     this.statePersistor.state.commentHidePersistor[articleId].lastUpdate = new Date().getTime();
     delete this.statePersistor.state.commentHidePersistor[articleId].collapsedThings[commentId];
     this.statePersistor.save();
+
+    if (this.inMemoryCache.isCached(commentId)) {
+      const cacheState = this.inMemoryCache.getCached(commentId);
+      parent.appendChild(cacheState.comments);
+
+      this.inMemoryCache.remove(commentId);
+    }
   }
 
   private isCommentHidden(articleId: string, commentId: string): boolean {
