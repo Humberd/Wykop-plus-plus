@@ -8,7 +8,6 @@ import './styles.scss';
 import { InMemoryCommentsCache } from './in-memory-comments-cache';
 
 export class CommentsHiderModule extends AppModule {
-
   static readonly MODULE_NAME = 'CommentsHiderModule';
 
   private static readonly STORAGE_KEY = 'comments-state';
