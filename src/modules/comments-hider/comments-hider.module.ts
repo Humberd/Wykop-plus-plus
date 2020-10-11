@@ -37,7 +37,6 @@ export class CommentsHiderModule extends AppModule {
 
   private listenForEvents() {
     this.appEvents.onItemsLoaded
-        .asObservable()
         .subscribe((payload: OnItemsLoadedPayload) => this.addCommentButtons(payload.isInitial));
   }
 
@@ -58,7 +57,7 @@ export class CommentsHiderModule extends AppModule {
       const commentId = commentBlock.querySelector('.dC')?.dataset?.id;
 
       if (!commentId) {
-        return;
+        continue;
       }
 
       if (this.isCommentHidden(this.articleId, commentId)) {

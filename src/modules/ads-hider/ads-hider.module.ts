@@ -35,8 +35,6 @@ export class AdsHiderModule extends AppModule {
       iframe.remove();
     });
 
-    console.log(`Removed ${elementsToRemove.length} ads`);
-
     document.body.style.cssText = '';
   }
 }
