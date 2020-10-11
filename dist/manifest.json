@@ -1,13 +1,12 @@
 {
   "manifest_version": 2,
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Dodatkowe funkcjonalnosci dla Wykop.pl",
   "name": "Wykop++",
   "author": "Maciej Sawicki",
   "permissions": [
     "storage",
-    "https://www.wykop.pl/*",
-    "history"
+    "https://www.wykop.pl/*"
   ],
   "content_scripts": [
     {

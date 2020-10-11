@@ -1,6 +1,6 @@
 {
   "name": "wykop-plus-plus",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Rozszerzenie zapewniające dodatkowe funkcjonalności dla portalu Wykop.pl",
   "scripts": {
     "build-dev": "webpack --config webpack/webpack.config.dev.js --colors",
