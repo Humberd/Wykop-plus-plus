@@ -64,7 +64,7 @@ export class ChildrenCounterModule extends AppModule {
 
     span.textContent = `(${childCount} dzieci)`;
 
-    elem.querySelector('.author .affect').appendChild(span);
+    elem.querySelector('.author .affect')?.appendChild(span);
 
     return span;
   }

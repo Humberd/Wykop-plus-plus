@@ -6,6 +6,8 @@ export class AppEvents {
 
   readonly onCommentHid = new Subject();
 
+  readonly adsRemoveRequest = new Subject<HTMLElement>();
+
 }
 
 export interface OnItemsLoadedPayload {

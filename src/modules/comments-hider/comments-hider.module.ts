@@ -55,7 +55,11 @@ export class CommentsHiderModule extends AppModule {
       const aElem = this.createHideButton(commentBlock);
 
       // @ts-ignore
-      const commentId = commentBlock.querySelector('.dC').dataset.id;
+      const commentId = commentBlock.querySelector('.dC')?.dataset?.id;
+
+      if (!commentId) {
+        return;
+      }
 
       if (this.isCommentHidden(this.articleId, commentId)) {
         this.hideComments(aElem, commentBlock, this.articleId, commentId);

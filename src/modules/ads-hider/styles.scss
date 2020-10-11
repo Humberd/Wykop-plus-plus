@@ -1,15 +1,40 @@
 #adM2parent, #adM1parent {
+	display: none !important;
+}
+
+// header add
+#site > .wrapper > .grid-full > .all-in {
 	display: none;
 }
 
-[id^=banner_top_] {
-	display: none;
+// cookies
+.annotation {
+	display: none !important;
 }
-
+// inline comment add
 [observeid] {
-	display: none;
+	display: none !important;
+}
+
+.orp-player-wrapper {
+	display: none !important;
+}
+
+// footer add
+.stickyAdDesktop {
+	display: none !important;
+}
+
+// mikroblog side add
+[id^=banner_rectangle], .scrollMe {
+	display: none !important;
+}
+
+// baner on top
+.alert-polityka {
+	display: none !important;
 }
 
 iframe {
-	display: none;
+	display: none !important;
 }
