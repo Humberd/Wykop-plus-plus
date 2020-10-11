@@ -23,6 +23,7 @@ export class InfiniteScrollModule extends AppModule {
         pageInfo.currentPage,
     );
 
+    this.addLoaderAnimationAbovePager();
     this.startOnScrollListener();
   }
 
@@ -81,6 +82,20 @@ export class InfiniteScrollModule extends AppModule {
     elem.textContent = `Strona ${pageNumber}`;
 
     getAllItemsParent().insertBefore(elem, lastItem.nextSibling);
+  }
+
+  private addLoaderAnimationAbovePager(): void {
+    const loaderWrapper = document.createElement('div');
+    loaderWrapper.classList.add('__loader-wrapper');
+
+    const loader = document.createElement('div');
+    loader.classList.add('__loader');
+
+    loaderWrapper.appendChild(loader);
+
+    const contentElem = document.querySelector('#content');
+    const pagerElem = document.querySelector('.pager');
+    contentElem?.insertBefore(loaderWrapper, pagerElem);
   }
 
 }

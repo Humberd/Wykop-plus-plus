@@ -28,7 +28,7 @@ export class AdsHiderModule extends AppModule {
 
   private removeAdFor(element: HTMLElement): void {
     const elementsToRemove = [
-      ...element.querySelectorAll('iframe'),
+      ...[...element.querySelectorAll('iframe')].filter(iframe => !iframe.parentElement.classList.contains('videoWrapper')),
     ];
 
     elementsToRemove.forEach(iframe => {

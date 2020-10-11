@@ -30,6 +30,11 @@
 	display: none !important;
 }
 
+// pagination add
+[id^=banner_bottom] {
+	display: none !important;
+}
+
 // baner on top
 .alert-polityka {
 	display: none !important;
@@ -37,4 +42,9 @@
 
 iframe {
 	display: none !important;
+}
+
+// we need to leave iframes for videos
+.videoWrapper iframe {
+	display: block !important;
 }

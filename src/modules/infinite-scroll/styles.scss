@@ -2,3 +2,44 @@
 	text-align: center;
 	padding: 4px;
 }
+
+@mixin createLoader() {
+	$color: #000;
+
+	.__loader {
+		display: inline-block;
+		width: 80px;
+		height: 80px;
+	}
+	.__loader:after {
+		content: " ";
+		display: block;
+		width: 64px;
+		height: 64px;
+		margin: 8px;
+		border-radius: 50%;
+		border: 6px solid $color;
+		border-color: $color transparent $color transparent;
+		animation: __loader 1.2s linear infinite;
+	}
+	@keyframes __loader {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+}
+
+.__loader-wrapper {
+	padding: 32px 0;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@include createLoader();
+}
+
+
