@@ -1,64 +1,10 @@
-#itemsStream > .iC:not(.link) {
-  position: relative;
-  /* Parent comment */ }
-  #itemsStream > .iC:not(.link) > .dC:not(.article) {
-    padding-left: 15px; }
-  #itemsStream > .iC:not(.link) > .dC.article {
-    margin-left: 3px; }
-  #itemsStream > .iC:not(.link).collapsed > ul.sub {
-    display: none;
-    height: 0; }
-  #itemsStream > .iC:not(.link).collapsed a.profile {
-    display: none; }
-  #itemsStream > .iC:not(.link).collapsed .text {
-    display: none; }
-  #itemsStream > .iC:not(.link).collapsed .actions {
-    display: none; }
-  #itemsStream > .iC:not(.link).collapsed .survey {
-    display: none; }
-  #itemsStream > .iC:not(.link).collapsed .author.hlight {
-    border-bottom: unset !important; }
-  #itemsStream > .iC:not(.link).collapsed .wblock .profile + div {
-    margin-left: 15px !important; }
-  @media screen and (max-width: 721px) {
-    #itemsStream > .iC:not(.link).collapsed .author {
-      padding-top: 0;
-      height: unset;
-      margin-bottom: 0; } }
-  @media screen and (max-width: 721px) {
-    #itemsStream > .iC:not(.link) .wblock a.profile {
-      margin-left: 5px !important; }
-    #itemsStream > .iC:not(.link) .wblock .profile + div {
-      margin-left: 55px !important; } }
+#itemsStream>.iC:not(.link){position:relative}#itemsStream>.iC:not(.link)>.dC:not(.article){padding-left:15px}#itemsStream>.iC:not(.link)>.dC.article{margin-left:3px}#itemsStream>.iC:not(.link).collapsed>ul.sub{display:none;height:0}#itemsStream>.iC:not(.link).collapsed a.profile{display:none}#itemsStream>.iC:not(.link).collapsed .text{display:none}#itemsStream>.iC:not(.link).collapsed .actions{display:none}#itemsStream>.iC:not(.link).collapsed .survey{display:none}#itemsStream>.iC:not(.link).collapsed .author.hlight{border-bottom:unset !important}#itemsStream>.iC:not(.link).collapsed .wblock .profile+div{margin-left:15px !important}@media screen and (max-width: 721px){#itemsStream>.iC:not(.link).collapsed .author{padding-top:0;height:unset;margin-bottom:0}}@media screen and (max-width: 721px){#itemsStream>.iC:not(.link) .wblock a.profile{margin-left:5px !important}#itemsStream>.iC:not(.link) .wblock .profile+div{margin-left:55px !important}}body.night .comment-expand:hover{background-color:#5d5d5d}.comment-expand{display:block;position:absolute;height:100%;width:15px;text-align:center;padding:3px 0;top:0;left:3px;transition:background-color 200ms, color 200ms;font-family:verdana, arial, helvetica, sans-serif;font-size:10px;text-decoration:none;color:#0082f0}.comment-expand:hover{text-decoration:none;background-color:#d3d3d3}
 
-body.night .comment-expand:hover {
-  background-color: #5d5d5d; }
+.child-counter{margin-left:7px}
 
-.comment-expand {
-  display: block;
-  position: absolute;
-  height: 100%;
-  width: 15px;
-  text-align: center;
-  padding: 3px 0;
-  top: 0;
-  left: 3px;
-  transition: background-color 200ms, color 200ms;
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 10px;
-  text-decoration: none;
-  color: #0082f0; }
-  .comment-expand:hover {
-    text-decoration: none;
-    background-color: #d3d3d3; }
+.remove-footer{margin-bottom:0 !important}
 
-.child-counter {
-  margin-left: 7px; }
+.next-page-bar{text-align:center;padding:4px}.__loader-wrapper{padding:32px 0;display:flex;justify-content:center;align-items:center}.__loader-wrapper .__loader{display:inline-block;width:80px;height:80px}.__loader-wrapper .__loader:after{content:" ";display:block;width:64px;height:64px;margin:8px;border-radius:50%;border:6px solid #000;border-color:#000 transparent #000 transparent;animation:__loader 1.2s linear infinite}@keyframes __loader{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
-.remove-footer {
-  margin-bottom: 0 !important; }
-
-.next-page-bar {
-  text-align: center;
-  padding: 4px; }
+#adM2parent,#adM1parent{display:none !important}#site>.wrapper>.grid-full>.all-in{display:none}.annotation{display:none !important}[observeid]{display:none !important}.orp-player-wrapper{display:none !important}.stickyAdDesktop{display:none !important}[id^=banner_rectangle],.scrollMe{display:none !important}[id^=banner_bottom]{display:none !important}.alert-polityka{display:none !important}.MuiButtonBase-roo{display:none !important}iframe{display:none !important}.videoWrapper iframe{display:block !important}
 
