@@ -13,5 +13,6 @@ yarn.lock
 .yarnclean
 .vscode
 .idea
+debug.log
 
 *.zip

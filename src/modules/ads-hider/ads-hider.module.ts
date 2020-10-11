@@ -12,9 +12,6 @@ export class AdsHiderModule extends AppModule {
   }
 
   async init() {
-    this.appEvents.adsRemoveRequest
-        .subscribe(element => this.removeAdFor(element));
-
     this.appEvents.onItemsLoaded
         .subscribe(() => this.removeAdFor(document.body));
 
@@ -25,7 +22,7 @@ export class AdsHiderModule extends AppModule {
     let checkCount = 0;
     timer(0, 500)
         .pipe(takeWhile(() => ++checkCount < 16))
-        .subscribe(() => this.appEvents.adsRemoveRequest.next(document.body));
+        .subscribe(() => this.removeAdFor(document.body));
 
   }
 
@@ -39,5 +36,7 @@ export class AdsHiderModule extends AppModule {
     });
 
     console.log(`Removed ${elementsToRemove.length} ads`);
+
+    document.body.style.cssText = '';
   }
 }
